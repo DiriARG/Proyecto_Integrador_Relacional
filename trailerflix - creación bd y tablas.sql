@@ -8,20 +8,21 @@ USE trailerflix;
 -- Crear tabla categorias.
 CREATE TABLE categorias (
     idCategoria INT PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(50) NOT NULL
+    nombre VARCHAR(50) NOT NULL UNIQUE  -- Garantiza que no se repitan los nombres de categorías
 );
 
 -- Crear tabla generos.
 CREATE TABLE generos (
     idGenero INT PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(100) NOT NULL
+    nombre VARCHAR(100) NOT NULL UNIQUE 
 );
 
 -- Crear tabla actores.
 CREATE TABLE actores (
     idActor INT PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(100) NOT NULL,
-    apellido VARCHAR(100) NOT NULL
+    nombre VARCHAR(100) NOT NULL ,
+    apellido VARCHAR(100) NOT NULL ,
+    CONSTRAINT unique_nombre_apellido UNIQUE (nombre, apellido) -- Garantiza que no se repita la combinación nombre-apellido
 );
 
 -- Crear tabla contenido.
