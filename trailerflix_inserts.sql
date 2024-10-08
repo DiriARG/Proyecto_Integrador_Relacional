@@ -1101,7 +1101,7 @@ INSERT INTO contenido_generos (idContenido, idGenero) VALUES
 (47, 18),
 (47, 12),
 (48, 4),
-(48, 18)
+(48, 18),
 (48, 15),
 (49, 3),
 (49, 10),
