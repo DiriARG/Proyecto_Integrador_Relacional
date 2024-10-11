@@ -1,6 +1,6 @@
 -- Crear la base de datos.
 CREATE SCHEMA trailerflix
-DEFAULT CHARACTER SET utf8;
+DEFAULT CHARACTER SET utf8mb4; -- "utf8mb4" es más rapido que "utf8" (utf8mb3), además de tener más ventajas, proximamente "utf8mb3" sera obsoleto en MySQL 8.0 .
 
 -- Utilizamos la bd creada.
 USE trailerflix;
