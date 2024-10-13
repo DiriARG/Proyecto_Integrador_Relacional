@@ -11,14 +11,14 @@ const sequelize = new Sequelize(DATABASE, DBUSER, PASSWORD, {
   dialect: "mysql",
   pool: {
     max: 5, // Máximo de conexiones en el grupo.
-    min: 0, // Minimo de conexiones en el grupo.
+    min: 0, // Mínimo de conexiones en el grupo.
     acquire: 30000, // Tiempo máximo, para liberar conexiones inactivas.
     idle: 10000, // Tiempo máximo para cerrar conexiones inactivas.
   }, 
 });
 
 // Función para probar la conexión a la base de datos.
-const testConnection = async () => {
+const testConexion = async () => {
   try {
     await sequelize.authenticate();
     console.log("Conexión exitosa con la base de datos.");
@@ -32,7 +32,7 @@ const testConnection = async () => {
 };
 
 // Ejecutamos la función de prueba.
-testConnection();
+testConexion();
 
 // Exportamos para usar en otros módulos.
 module.exports = { sequelize };
