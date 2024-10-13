@@ -3,10 +3,8 @@ const express = require("express");
 const morgan = require("morgan");
 
 // Importamos las rutas definidas en otro archivo.
-const contenidoRoutes = require('./src/routes/contenidoRoutes');
-
-// Importamos la función para conectarse a la base de datos MySQL.
-const { sequelize } = require("./src/conexion/database");
+const rutaBienvenida = require("./src/routes/ruta_principal"); // Ruta de bienvenida.
+const contenidoRoutes = require("./src/routes/contenidoRoutes"); // Rutas relacionadas con el contenido de "trailerflix".
 
 // Definimos el puerto.
 const PORT = process.env.PORT ?? 3008;
@@ -21,12 +19,12 @@ app.disable("x-powered-by");
 app.use(express.json());
 app.use(morgan("dev"));
 
-// Rutas. 
-app.use('/contenido', contenidoRoutes);
-
+// Rutas.
+app.use("/", rutaBienvenida);
+app.use("/contenido", contenidoRoutes);
 
 // Middleware para manejar rutas no encontradas.
-app.use((req, res) => { 
+app.use((req, res) => {
   res.status(404).json({ error: "Ruta no encontrada 🚫❗" });
 });
 
