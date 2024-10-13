@@ -21,7 +21,7 @@ const sequelize = new Sequelize(DATABASE, DBUSER, PASSWORD, {
 const testConexion = async () => {
   try {
     await sequelize.authenticate();
-    console.log("Conexión exitosa con la base de datos.");
+    console.log("Conexión exitosa con la base de datos ✅");
   } catch (err) {
     console.error("Error al conectar a la base de datos:", err);
   } finally {
