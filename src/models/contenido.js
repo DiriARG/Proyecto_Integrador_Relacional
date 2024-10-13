@@ -19,7 +19,7 @@ const Contenido = sequelize.define(
     },
     temporadas: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: true, // Se permiten los nulos.
     },
     duracion: {
       type: DataTypes.STRING(100),
@@ -30,7 +30,7 @@ const Contenido = sequelize.define(
     },
     idCategoria: {
       type: DataTypes.INTEGER,
-      allowNull: false, // Especificamos que no puede ser nulo
+      allowNull: false, // Especificamos que no puede ser nulo.
       references: {
         model: "categorias", // Nombre de la tabla de referencia.
         key: "idCategoria", // Columna de referencia.
