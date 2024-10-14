@@ -45,4 +45,29 @@ const Contenido = sequelize.define(
   }
 );
 
+// Definimos las relaciones en el modelo Contenido.
+Contenido.associate = (models) => {
+  // Relación uno a muchos con Categorias.
+  Contenido.belongsTo(models.Categoria, {
+    foreignKey: "idCategoria",
+    as: "categoria", // Alias para la relación.
+  });
+
+  // Relación muchos a muchos con Genero (a través de la tabla intermedia contenido_generos).
+  Contenido.belongsToMany(models.Genero, {
+    through: "contenido_generos",
+    foreignKey: "idContenido",
+    otherKey: "idGenero", // Se utiliza en "BelongsToMany", es para ser explicito sobre el nombre de la segunda clave foránea.
+    as: "generos", 
+  });
+
+  // Relación muchos a muchos con Actor (a través de la tabla intermedia contenido_actores).
+  Contenido.belongsToMany(models.Actor, {
+    through: "contenido_actores",
+    foreignKey: "idContenido",
+    otherKey: "idActor",
+    as: "actores", 
+  });
+};
+
 module.exports = { Contenido };

@@ -22,4 +22,13 @@ const Genero = sequelize.define(
   }
 );
 
+Genero.associate = (models) => {
+  Genero.belongsToMany(models.Contenido, {
+    through: 'contenido_generos', // Sequelize manejará esta tabla intermedia.
+    foreignKey: 'idGenero',
+    otherKey: 'idContenido',
+    as: 'contenidosPorGenero',
+  });
+};
+
 module.exports = { Genero }; 

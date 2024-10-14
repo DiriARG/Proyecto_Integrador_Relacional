@@ -22,4 +22,10 @@ const Categoria = sequelize.define(
   }
 );
 
+Categoria.associate = (models) => {
+  Categoria.hasMany(models.Contenido, { // Se usa "hasMany" porque la relacion es de uno a muchos, osea porque una categoría puede tener muchos contenidos.
+    foreignKey: "idCategoria",
+    as: 'contenidosPorCategoria',
+  });
+};
 module.exports = { Categoria }; // Exportamos el modelo de Categoria usando llaves.
