@@ -12,7 +12,8 @@ const obtenerTodosLosContenidos = async (req, res) => {
   try {
     // Con el "findAll" buscamos todos los registros de la tabla "Contenido".
     const contenidos = await Contenido.findAll({
-      attributes: [ // "attributes" son los nombres de las columnas de las tablas en la bd que queremos mostrar, en este caso de la tabla "contenido".
+      attributes: [
+        // "attributes" son los nombres de las columnas de las tablas en la bd que queremos mostrar, en este caso de la tabla "contenido".
         "idContenido",
         "titulo",
         "resumen",
@@ -21,7 +22,7 @@ const obtenerTodosLosContenidos = async (req, res) => {
         "trailer",
         // Creamos un campo virtual llamado "Temporadas/Duración".
         [
-          sequelize.literal("COALESCE(temporadas, duracion)"), // Con "sequelize.literal" escribimos expresiones "crudas" o literales de SQL. 
+          sequelize.literal("COALESCE(temporadas, duracion)"), // Con "sequelize.literal" escribimos expresiones "crudas" o literales de SQL.
           "TemporadasDuracion",
         ],
       ],
@@ -50,11 +51,11 @@ const obtenerTodosLosContenidos = async (req, res) => {
 
     // Formateamos el resultado para que sea más legible antes de enviarlo como respuesta.
     const contenidoData = contenidos.map((contenido) => ({
-      ID: contenido.idContenido, 
+      ID: contenido.idContenido,
       Título: contenido.titulo,
       Categoría: contenido.categoria.nombre,
       Resumen: contenido.resumen,
-      "Temporadas/Duración": contenido.dataValues.TemporadasDuracion, // Usamos el alias creado con COALESCE.
+      "Temporadas/Duración": contenido.dataValues.TemporadasDuracion, // Usamos el alias creado con COALESCE. "dataValues" es una propiedad donde se almacena los datos de las columnas virtuales.
       Géneros: contenido.generos.map((genero) => genero.nombre).join(", "), // Concatenamos los géneros en un string.
       Actores: contenido.actores
         .map((actor) => `${actor.nombre} ${actor.apellido}`)
@@ -72,6 +73,55 @@ const obtenerTodosLosContenidos = async (req, res) => {
   }
 };
 
+// Función para obtener un contenido por ID.
+const obtenerContenidoPorID = async (req, res) => {
+  try {
+    const { id } = req.params; // Obtenemos el ID desde los parámetros de la URL.
+    const contenido = await Contenido.findByPk(id, {
+      include: [
+        { model: Categoria, as: "categoria", attributes: ["nombre"] }, // En este caso no creamos un campo virtual ya que al ser findByPk (osea traer 1 único registro) solo necesita una verificación para ver si temporadas o duración tiene un valor.
+        {
+          model: Genero,
+          as: "generos",
+          through: { attributes: [] },
+          attributes: ["nombre"],
+        },
+        {
+          model: Actor,
+          as: "actores",
+          through: { attributes: [] },
+          attributes: ["nombre", "apellido"],
+        },
+      ],
+    });
+
+    // Si no existe el contenido...
+    if (!contenido) {
+      return res.status(404).json({ error: "El contenido no fue encontrado." });
+    }
+
+    // Si existe, formateamos los datos.
+    const contenidoData = {
+      ID: contenido.idContenido,
+      Título: contenido.titulo,
+      Categoría: contenido.categoria.nombre,
+      Resumen: contenido.resumen,
+      "Temporadas/Duración": contenido.temporadas || contenido.duracion,
+      Géneros: contenido.generos.map((genero) => genero.nombre).join(", "),
+      Actores: contenido.actores
+        .map((actor) => `${actor.nombre} ${actor.apellido}`)
+        .join(", "),
+      Tráiler: contenido.trailer,
+    };
+
+    res.status(200).json(contenidoData);
+  } catch (error) {
+    console.error("Error al obtener el contenido por ID: ", error);
+    res.status(500).json({ error: "No se pudieron obtener los contenidos." });
+  }
+};
+
 module.exports = {
   obtenerTodosLosContenidos,
+  obtenerContenidoPorID,
 };
