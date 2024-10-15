@@ -46,7 +46,9 @@ const obtenerTodosLosContenidos = async (req, res) => {
 
     // Verifica si hay contenidos disponibles en la base de datos.
     if (contenidos.length === 0) {
-      return res.status(404).json({ error: "No hay contenidos disponibles." });
+      return res
+        .status(404)
+        .json({ error: "No se encontraron contenidos disponibles 🕵️❗" });
     }
 
     // Formateamos el resultado para que sea más legible antes de enviarlo como respuesta.
@@ -69,7 +71,11 @@ const obtenerTodosLosContenidos = async (req, res) => {
     // Registramos el error en la consola para su seguimiento.
     console.error("Error al obtener los contenidos: ", error);
     // Respondemos con un mensaje al cliente.
-    res.status(500).json({ error: "No se pudieron obtener los contenidos." });
+    res
+      .status(500)
+      .json({
+        error: "Error del servidor al devolver todos los contenidos 🚫⚙️",
+      });
   }
 };
 
@@ -97,7 +103,9 @@ const obtenerContenidoPorID = async (req, res) => {
 
     // Si no existe el contenido...
     if (!contenido) {
-      return res.status(404).json({ error: "El contenido no fue encontrado." });
+      return res
+        .status(404)
+        .json({ error: `Contenido con ID:${id} no encontrado 🕵️❗` });
     }
 
     // Si existe, formateamos los datos.
@@ -116,8 +124,8 @@ const obtenerContenidoPorID = async (req, res) => {
 
     res.status(200).json(contenidoData);
   } catch (error) {
-    console.error("Error al obtener el contenido por ID: ", error);
-    res.status(500).json({ error: "No se pudieron obtener los contenidos." });
+    console.error(`Error al obtener el contenido con ID:${id}: `, error);
+    res.status(500).json({ error: "Error del servidor al obtener el contenido 🚫⚙️"  });
   }
 };
 
