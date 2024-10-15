@@ -1,3 +1,4 @@
+// Importa los modelos necesarios para establecer relaciones.
 const { Actor } = require('./actor');
 const { Categoria } = require('./categoria');
 const { Contenido } = require('./contenido');
