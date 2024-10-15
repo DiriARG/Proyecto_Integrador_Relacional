@@ -59,6 +59,7 @@ Contenido.associate = (models) => {
     foreignKey: "idContenido",
     otherKey: "idGenero", // Se utiliza en "BelongsToMany", es para ser explicito sobre el nombre de la segunda clave foránea.
     as: "generos", 
+    timestamps: false, // Esto desactiva timestamps en la tabla intermedia (como por ej: createdAt).
   });
 
   // Relación muchos a muchos con Actor (a través de la tabla intermedia contenido_actores).
@@ -67,6 +68,7 @@ Contenido.associate = (models) => {
     foreignKey: "idContenido",
     otherKey: "idActor",
     as: "actores", 
+    timestamps: false,
   });
 };
 

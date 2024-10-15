@@ -33,10 +33,11 @@ const Actor = sequelize.define(
 
 Actor.associate = (models) => {
   Actor.belongsToMany(models.Contenido, {
-    through: "contenido_actores", // Sequelize manejará esta tabla intermedia
+    through: "contenido_actores", // Sequelize manejará esta tabla intermedia.
     foreignKey: "idActor",
     otherKey: "idContenido",
     as: "contenidosPorActor",
+    timestamps: false,
   });
 };
 
