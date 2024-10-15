@@ -1,4 +1,4 @@
--- Este archivo es para probar su correcta ejecución después de haber realizado todas las inserciones de datos en las tablas de la base de datos "trailerflix".
+-- Este archivo es para probar su correcta ejecución después de haber realizado todas las inserciones de datos en las tablas de la base de datos "trailerflix". Realizar en MySQL Workbench.
 
 USE trailerflix;
 
