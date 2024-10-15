@@ -1,5 +1,5 @@
 const { DataTypes } = require("sequelize");
-const sequelize = require("../conexion/database");
+const { sequelize } = require("../conexion/database");
 
 // Definimos el modelo de "Categoria"
 const Categoria = sequelize.define(
@@ -23,9 +23,10 @@ const Categoria = sequelize.define(
 );
 
 Categoria.associate = (models) => {
-  Categoria.hasMany(models.Contenido, { // Se usa "hasMany" porque la relacion es de uno a muchos, osea porque una categoría puede tener muchos contenidos.
+  Categoria.hasMany(models.Contenido, {
+    // Se usa "hasMany" porque la relacion es de uno a muchos, osea porque una categoría puede tener muchos contenidos.
     foreignKey: "idCategoria",
-    as: 'contenidosPorCategoria',
+    as: "contenidosPorCategoria",
   });
 };
 module.exports = { Categoria }; // Exportamos el modelo de Categoria usando llaves.

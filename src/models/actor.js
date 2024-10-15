@@ -1,5 +1,5 @@
 const { DataTypes } = require("sequelize");
-const sequelize = require("../conexion/database"); // Importamos la conexión a la base de datos.
+const { sequelize } = require("../conexion/database"); // Importamos la conexión a la base de datos.
 
 // Definimos el modelo "Actor".
 const Actor = sequelize.define(
@@ -33,10 +33,10 @@ const Actor = sequelize.define(
 
 Actor.associate = (models) => {
   Actor.belongsToMany(models.Contenido, {
-    through: 'contenido_actores', // Sequelize manejará esta tabla intermedia
-    foreignKey: 'idActor',
-    otherKey: 'idContenido',
-    as: 'contenidosPorActor',
+    through: "contenido_actores", // Sequelize manejará esta tabla intermedia
+    foreignKey: "idActor",
+    otherKey: "idContenido",
+    as: "contenidosPorActor",
   });
 };
 
