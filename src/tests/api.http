@@ -1,0 +1,19 @@
+### Cabe aclarar que el puerto puede variar según su configuración; en este caso, se está utilizando el 3000.
+### Para obtener más información sobre las rutas de la API, consulta el archivo "README.md".
+
+### Ruta principal (Devuelve un mensaje de bienvenida y un poco de información sobre la API).
+GET http://localhost:3000/
+
+### Obtener todos los contenidos.
+GET http://localhost:3000/contenido
+
+### Obtener un contenido por ID.
+GET http://localhost:3000/contenido/23
+
+### Filtrar contenidos por título, género o categoría (búsqueda parcial).
+### Por título:
+GET http://localhost:3000/contenido/filtrar?titulo=IT - capítulo 2
+### Por género:
+GET http://localhost:3000/contenido/filtrar?genero=comedia 
+### Por categoría:
+GET http://localhost:3000/contenido/filtrar?categoria=peli
