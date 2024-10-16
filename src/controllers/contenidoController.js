@@ -6,6 +6,7 @@ const {
   Genero,
 } = require("../models/asociaciones");
 const { sequelize } = require("../conexion/database");
+const { Op } = require("sequelize"); // Para usar operadores avanzados de Sequelize.
 
 // Función para obtener todos los contenidos.
 const obtenerTodosLosContenidos = async (req, res) => {
@@ -71,18 +72,16 @@ const obtenerTodosLosContenidos = async (req, res) => {
     // Registramos el error en la consola para su seguimiento.
     console.error("Error al obtener los contenidos: ", error);
     // Respondemos con un mensaje al cliente.
-    res
-      .status(500)
-      .json({
-        error: "Error del servidor al devolver todos los contenidos 🚫⚙️",
-      });
+    res.status(500).json({
+      error: "Error del servidor al devolver todos los contenidos 🚫⚙️",
+    });
   }
 };
 
 // Función para obtener un contenido por ID.
 const obtenerContenidoPorID = async (req, res) => {
+  const { id } = req.params; // Obtenemos el ID desde los parámetros de la URL.
   try {
-    const { id } = req.params; // Obtenemos el ID desde los parámetros de la URL.
     const contenido = await Contenido.findByPk(id, {
       include: [
         { model: Categoria, as: "categoria", attributes: ["nombre"] }, // En este caso no creamos un campo virtual ya que al ser findByPk (osea traer 1 único registro) solo necesita una verificación para ver si temporadas o duración tiene un valor.
@@ -125,11 +124,86 @@ const obtenerContenidoPorID = async (req, res) => {
     res.status(200).json(contenidoData);
   } catch (error) {
     console.error(`Error al obtener el contenido con ID:${id}: `, error);
-    res.status(500).json({ error: "Error del servidor al obtener el contenido 🚫⚙️"  });
+    res
+      .status(500)
+      .json({ error: "Error del servidor al obtener el contenido 🚫⚙️" });
+  }
+};
+
+// Función para filtrar contenidos por título, género o categoría (búsqueda parcial).
+const filtrarContenidos = async (req, res) => {
+  const { titulo, genero, categoria } = req.query;
+
+  try {
+    // Creamos un objeto dinámico donde guardamos las condiciones de búsqueda.
+    const filtro = {}; // Este objeto se usará solo para filtrar por título.
+
+    // Filtramos por título en caso de que se proporcione.
+    if (titulo) {
+      filtro.titulo = { [Op.like]: `%${titulo}%` }; // "LIKE" SQL para buscar coincidencias parciales.
+    }
+
+    // Creamos un arreglo que contiene objetos que definen las relaciones que se incluirán en la consulta.
+    const includeOpciones = [
+      {
+        model: Categoria,
+        as: "categoria",
+        attributes: ["nombre"],
+        where: categoria ? { nombre: { [Op.like]: `%${categoria}%` } } : {}, // Filtrar por categoría si se proporciona. El "where" se utiliza para establecer condiciones en la consulta. Permite filtrar resultados en la respuesta.
+      },
+      {
+        model: Genero,
+        as: "generos",
+        through: { attributes: [] },
+        attributes: ["nombre"],
+        where: genero ? { nombre: { [Op.like]: `%${genero}%` } } : {}, // Filtrar por género si se proporciona. Utilizamos operador ternario (? :) para evaluar la condición.
+      },
+      {
+        model: Actor,
+        as: "actores",
+        through: { attributes: [] },
+        attributes: ["nombre", "apellido"],
+      },
+    ];
+
+    // Realizamos la consulta a la base de datos usando las condiciones dinámicas.
+    const contenidos = await Contenido.findAll({
+      where: filtro, // Aplicamos el filtro del título.
+      include: includeOpciones, // Incluimos las relaciones con género, categoría y actores.
+    });
+
+    // Verificamos si se encontraron contenidos.
+    if (contenidos.length === 0) {
+      return res.status(404).json({
+        error:
+          "No se encontraron contenidos con los filtro proporcionados 🕵️❗",
+      });
+    }
+
+    const contenidoData = contenidos.map((contenido) => ({
+      ID: contenido.idContenido,
+      Título: contenido.titulo,
+      Categoría: contenido.categoria.nombre,
+      Resumen: contenido.resumen,
+      "Temporadas/Duración": contenido.temporadas || contenido.duracion,
+      Géneros: contenido.generos.map((genero) => genero.nombre).join(", "),
+      Actores: contenido.actores
+        .map((actor) => `${actor.nombre} ${actor.apellido}`)
+        .join(", "),
+      Tráiler: contenido.trailer,
+    }));
+
+    res.status(200).json(contenidoData);
+  } catch (error) {
+    console.error("Error al filtrar los contenidos: ", error);
+    res
+      .status(500)
+      .json({ error: "Error del servidor al filtrar los contenidos 🚫⚙️" });
   }
 };
 
 module.exports = {
   obtenerTodosLosContenidos,
   obtenerContenidoPorID,
+  filtrarContenidos,
 };
