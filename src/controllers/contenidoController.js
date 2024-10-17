@@ -211,7 +211,7 @@ const agregarContenido = async (req, res) => {
     duracion,
     trailer,
     idCategoria,
-    generos, 
+    generos,
     actores,
   } = req.body;
 
@@ -278,14 +278,14 @@ const agregarContenido = async (req, res) => {
       idCategoria,
     });
 
-     // Si se proporcionaron géneros, los asociamos al nuevo contenido.
-     if (generosDB.length > 0) {
+    // Si se proporcionaron géneros, los asociamos al nuevo contenido.
+    if (generosDB.length > 0) {
       await nuevoContenido.setGeneros(generosDB); // Lo que hacemos con "setGeneros(generosDB)" es tomar los géneros del array generosDB y los asocia al nuevo contenido creado.
     }
 
     // Si se proporcionaron actores, los asociamos al nuevo contenido.
     if (actoresDB.length > 0) {
-      await nuevoContenido.setActores(actoresDB); 
+      await nuevoContenido.setActores(actoresDB);
     }
 
     // Respondemos con el contenido creado
@@ -293,10 +293,92 @@ const agregarContenido = async (req, res) => {
       .status(201)
       .json({ message: "Nuevo contenido creado ✅: ", nuevoContenido });
   } catch (error) {
-    console.error("Error al agregar contenido:", error);
+    console.error("Error al intentar crear un nuevo contenido: ", error);
     res
       .status(500)
-      .json({ error: "Ocurrió un error al agregar el contenido." });
+      .json({ error: "Error del servidor al crear un nuevo contenido 🚫⚙️" });
+  }
+};
+
+// Función para actualizar un contenido por su ID.
+const actualizarContenido = async (req, res) => {
+  const { id } = req.params; // Obtenemos el ID del contenido a actualizar.
+  const {
+    titulo,
+    resumen,
+    temporadas,
+    duracion,
+    trailer,
+    idCategoria,
+    generos,
+    actores,
+  } = req.body;
+
+  try {
+    // Verificamos si el contenido con el ID proporcionado existe.
+    const contenido = await Contenido.findByPk(id);
+
+    if (!contenido) {
+      return res.status(404).json({ error: `Contenido con ID ${id} no encontrado.` });
+    }
+
+    // Validamos si los géneros proporcionados existen en la base de datos.
+    let generosDB = [];
+    if (generos && generos.length > 0) {
+      generosDB = await Genero.findAll({
+        where: { idGenero: { [Op.in]: generos } },
+      });
+
+      if (generosDB.length !== generos.length) {
+        return res
+          .status(400)
+          .json({ error: "Uno o más géneros proporcionados no existen." });
+      }
+    }
+
+    // Validamos si los actores proporcionados existen en la base de datos.
+    let actoresDB = [];
+    if (actores && actores.length > 0) {
+      actoresDB = await Actor.findAll({
+        where: { idActor: { [Op.in]: actores } },
+      });
+
+      if (actoresDB.length !== actores.length) {
+        return res
+          .status(400)
+          .json({ error: "Uno o más actores proporcionados no existen." });
+      }
+    }
+
+    // Actualizamos el contenido.
+    await contenido.update({
+      titulo,
+      resumen,
+      temporadas: temporadas || null, 
+      duracion: duracion || null, 
+      trailer,
+      idCategoria,
+    });
+
+    // Actualizamos las asociaciones con géneros, si se proporcionaron.
+    if (generosDB.length > 0) {
+      await contenido.setGeneros(generosDB);
+    }
+
+    // Actualizamos las asociaciones con actores, si se proporcionaron.
+    if (actoresDB.length > 0) {
+      await contenido.setActores(actoresDB);
+    }
+
+    // Respondemos con el contenido actualizado.
+    res
+      .status(200)
+      .json({ message: "Contenido actualizado correctamente ✅", contenido });
+  } catch (error) {
+    console.error("Error al actualizar contenido:", error);
+    res
+      .status(500)
+      .json({ error: "Ocurrió un error al actualizar el contenido." });
   }
 };
 
@@ -305,4 +387,5 @@ module.exports = {
   obtenerContenidoPorID,
   filtrarContenidos,
   agregarContenido,
+  actualizarContenido,
 };
