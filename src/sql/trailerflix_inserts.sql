@@ -869,7 +869,11 @@ INSERT INTO actores (nombre, apellido) VALUES
 ('Tess', 'Haubrich'),
 ('Andrew', 'Crawford'),
 ('James', 'Franco'),
-('Javier', 'Botet');
+('Javier', 'Botet'),
+('Jerry', 'Seinfeld'),
+('Jason', 'Alexander'),
+('Michael', 'Richards'),
+('Julia', 'Louis-Dreyfus');
 
 -- Insertar series en la tabla "contenido": idCategoria = 1.
 INSERT INTO contenido (titulo, resumen, temporadas, duracion, trailer, idCategoria) VALUES 
