@@ -176,7 +176,7 @@ const filtrarContenidos = async (req, res) => {
     if (contenidos.length === 0) {
       return res.status(404).json({
         error:
-          "No se encontraron contenidos con los filtro proporcionados 🕵️❗",
+          "No se encontraron contenidos con los filtros proporcionados 🕵️❗",
       });
     }
 
@@ -202,8 +202,107 @@ const filtrarContenidos = async (req, res) => {
   }
 };
 
+// Función para agregar un nuevo contenido (película o serie).
+const agregarContenido = async (req, res) => {
+  const {
+    titulo,
+    resumen,
+    temporadas,
+    duracion,
+    trailer,
+    idCategoria,
+    generos, 
+    actores,
+  } = req.body;
+
+  try {
+    // Validación de campos obligatorios.
+    if (
+      !titulo ||
+      !resumen ||
+      !trailer ||
+      !idCategoria ||
+      (!temporadas && !duracion) // Nos aseguramos que uno de los dos campos sea ingresado (temporadas o duración).
+    ) {
+      return res
+        .status(400)
+        .json({ error: "Todos los campos son obligatorios 🚫!" });
+    }
+
+    // Validamos que la categoría exista, osea, una película o una serie.
+    const categoria = await Categoria.findByPk(idCategoria);
+    if (!categoria) {
+      return res
+        .status(404)
+        .json({ error: "La categoría especificada no existe." });
+    }
+
+    // Validamos si los géneros proporcionados existen en la base de datos.
+    let generosDB = [];
+    // Verificamos si la variable "generos" existe, luego verificamos si ese array "generos" es mayor a 0, osea se proporcionaron géneros en la solicitud.
+    if (generos && generos.length > 0) {
+      // Buscamos los géneros que coinciden con los IDs proporcionados en la tabla "Genero".
+      generosDB = await Genero.findAll({
+        where: { idGenero: { [Op.in]: generos } }, // Con [Op.in] buscamos los géneros de una columna especifica (generos) que coincidan con un array (generosDB).
+      });
+
+      // Si el número de géneros encontrados no coincide con los proporcionados, enviamos un error.
+      if (generosDB.length !== generos.length) {
+        return res
+          .status(400)
+          .json({ error: "Uno o más géneros proporcionados no existen." });
+      }
+    }
+
+    // Validamos si los actores proporcionados existen en la base de datos.
+    let actoresDB = [];
+    if (actores && actores.length > 0) {
+      actoresDB = await Actor.findAll({
+        where: { idActor: { [Op.in]: actores } },
+      });
+
+      if (actoresDB.length !== actores.length) {
+        return res
+          .status(400)
+          .json({ error: "Uno o más actores proporcionados no existen." });
+      }
+    }
+
+    // Creamos el nuevo contenido.
+    const nuevoContenido = await Contenido.create({
+      titulo,
+      resumen,
+      temporadas: temporadas || null, // NULL por si es una pelicula...
+      duracion: duracion || null, // NULL por si es una serie...
+      trailer,
+      idCategoria,
+    });
+
+     // Si se proporcionaron géneros, los asociamos al nuevo contenido.
+     if (generosDB.length > 0) {
+      await nuevoContenido.setGeneros(generosDB); // Lo que hacemos con "setGeneros(generosDB)" es tomar los géneros del array generosDB y los asocia al nuevo contenido creado.
+    }
+
+    // Si se proporcionaron actores, los asociamos al nuevo contenido.
+    if (actoresDB.length > 0) {
+      await nuevoContenido.setActores(actoresDB); 
+    }
+
+    // Respondemos con el contenido creado
+    res
+      .status(201)
+      .json({ message: "Nuevo contenido creado ✅: ", nuevoContenido });
+  } catch (error) {
+    console.error("Error al agregar contenido:", error);
+    res
+      .status(500)
+      .json({ error: "Ocurrió un error al agregar el contenido." });
+  }
+};
+
 module.exports = {
   obtenerTodosLosContenidos,
   obtenerContenidoPorID,
   filtrarContenidos,
+  agregarContenido,
 };

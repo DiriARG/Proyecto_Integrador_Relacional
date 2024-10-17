@@ -12,6 +12,8 @@ router.get("/filtrar", contenidoController.filtrarContenidos);
 // Obtener un contenido por ID.
 router.get("/:id",contenidoController.obtenerContenidoPorID);
 
+// Agregar un nuevo contenido (película o serie).
+router.post("/", contenidoController.agregarContenido);
 
 // Exportamos el router para que pueda ser utilizado en 'app.js' u otros archivos.
 module.exports = router;
