@@ -8,7 +8,7 @@ GET http://localhost:3000/
 GET http://localhost:3000/contenido
 
 ### Obtener un contenido por ID.
-GET http://localhost:3000/contenido/99
+GET http://localhost:3000/contenido/23
 
 ### Filtrar contenidos por título, género o categoría (búsqueda parcial).
 ### Por título:
@@ -34,17 +34,10 @@ content-type: application/json
 }
 
 
-### Actualizar un contenido por su ID.
-PUT http://localhost:3000/contenido/99
+### Actualizar parcialmente un contenido por su ID.
+PATCH  http://localhost:3000/contenido/23
 content-type: application/json
 
 {
-    "titulo": "Seinfeld - The Complete Series",
-    "resumen": "Cuatro amigos solteros lidian con las vicisitudes diarias de la vida en Nueva York.",
-    "temporadas": 9,
-    "duracion": null,
-    "trailer": "https://www.youtube.com/watch?v=hQXKyIG_NS4",
-    "idCategoria": 1,
-    "generos": [12, 4],
-    "actores": null
+    "temporadas": 6
 }

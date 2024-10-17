@@ -132,7 +132,7 @@ const obtenerContenidoPorID = async (req, res) => {
 
 // Función para filtrar contenidos por título, género o categoría (búsqueda parcial).
 const filtrarContenidos = async (req, res) => {
-  const { titulo, genero, categoria } = req.query;
+  const { titulo, genero, categoria } = req.query; // Extraemos los parámetros de la URL.
 
   try {
     // Creamos un objeto dinámico donde guardamos las condiciones de búsqueda.
@@ -180,6 +180,7 @@ const filtrarContenidos = async (req, res) => {
       });
     }
 
+    // Formateamos la respuesta.
     const contenidoData = contenidos.map((contenido) => ({
       ID: contenido.idContenido,
       Título: contenido.titulo,
@@ -193,6 +194,7 @@ const filtrarContenidos = async (req, res) => {
       Tráiler: contenido.trailer,
     }));
 
+    // Devolvemos los contenidos encontrados.
     res.status(200).json(contenidoData);
   } catch (error) {
     console.error("Error al filtrar los contenidos: ", error);
@@ -213,7 +215,7 @@ const agregarContenido = async (req, res) => {
     idCategoria,
     generos,
     actores,
-  } = req.body;
+  } = req.body; // Extraemos datos del cuerpo de la solicitud.
 
   try {
     // Validación de campos obligatorios.
@@ -222,7 +224,7 @@ const agregarContenido = async (req, res) => {
       !resumen ||
       !trailer ||
       !idCategoria ||
-      (!temporadas && !duracion) // Nos aseguramos que uno de los dos campos sea ingresado (temporadas o duración).
+      (temporadas === undefined && duracion === undefined) // Nos aseguramos que uno de los dos campos sea ingresado (temporadas o duración).
     ) {
       return res
         .status(400)
@@ -288,7 +290,7 @@ const agregarContenido = async (req, res) => {
       await nuevoContenido.setActores(actoresDB);
     }
 
-    // Respondemos con el contenido creado
+    // Respondemos con el contenido creado.
     res
       .status(201)
       .json({ message: "Nuevo contenido creado ✅: ", nuevoContenido });
@@ -300,7 +302,7 @@ const agregarContenido = async (req, res) => {
   }
 };
 
-// Función para actualizar un contenido por su ID.
+// Función para actualizar parcialmente un contenido por su ID.
 const actualizarContenido = async (req, res) => {
   const { id } = req.params; // Obtenemos el ID del contenido a actualizar.
   const {
@@ -315,11 +317,15 @@ const actualizarContenido = async (req, res) => {
   } = req.body;
 
   try {
-    // Verificamos si el contenido con el ID proporcionado existe.
+    // Verificamos si el contenido con el ID proporcionado existe antes de cualquier validación.
     const contenido = await Contenido.findByPk(id);
 
     if (!contenido) {
-      return res.status(404).json({ error: `Contenido con ID ${id} no encontrado.` });
+      return res
+        .status(404)
+        .json({
+          error: `Contenido con ID ${id} no encontrado para su actualización 🕵️❗`,
+        });
     }
 
     // Validamos si los géneros proporcionados existen en la base de datos.
@@ -352,33 +358,35 @@ const actualizarContenido = async (req, res) => {
 
     // Actualizamos el contenido.
     await contenido.update({
-      titulo,
-      resumen,
-      temporadas: temporadas || null, 
-      duracion: duracion || null, 
-      trailer,
-      idCategoria,
+      titulo: titulo || contenido.titulo, // Si se proporciona un nuevo titulo, actualiza el campo con ese valor. Si no se proporciona, mantiene el valor que ya tenía el contenido (contenido.titulo).
+      resumen: resumen || contenido.resumen,
+      temporadas: temporadas || contenido.temporadas,
+      duracion: duracion || contenido.duracion,
+      trailer: trailer || contenido.trailer,
+      idCategoria: idCategoria || contenido.idCategoria,
     });
 
-    // Actualizamos las asociaciones con géneros, si se proporcionaron.
-    if (generosDB.length > 0) {
+    // Actualizamos las asociaciones con géneros, si el usuario proporcionó géneros válidos y se encontraron en la base de datos.
+    if (generos && generosDB.length > 0) {
       await contenido.setGeneros(generosDB);
     }
-
-    // Actualizamos las asociaciones con actores, si se proporcionaron.
-    if (actoresDB.length > 0) {
+    // Actualizamos las asociaciones con actores, si el usuario proporcionó actores válidos y se encontraron en la base de datos.
+    if (actores && actoresDB.length > 0) {
       await contenido.setActores(actoresDB);
     }
 
-    // Respondemos con el contenido actualizado.
+    // Respondemos con el contenido actualizado y lo mostramos.
     res
       .status(200)
-      .json({ message: "Contenido actualizado correctamente ✅", contenido });
+      .json({ message: "Contenido actualizado correctamente ✅: ", contenido });
   } catch (error) {
-    console.error("Error al actualizar contenido:", error);
+    console.error(
+      `Error al intentar actualizar el contenido con ID:${id}: `,
+      error
+    );
     res
       .status(500)
-      .json({ error: "Ocurrió un error al actualizar el contenido." });
+      .json({ error: "Error del servidor al actualizar el contenido 🚫⚙️" });
   }
 };
 
