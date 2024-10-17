@@ -12,8 +12,23 @@ GET http://localhost:3000/contenido/23
 
 ### Filtrar contenidos por título, género o categoría (búsqueda parcial).
 ### Por título:
-GET http://localhost:3000/contenido/filtrar?titulo=IT - capítulo 2
+GET http://localhost:3000/contenido/filtrar?titulo=it - capitulo
 ### Por género:
 GET http://localhost:3000/contenido/filtrar?genero=comedia 
 ### Por categoría:
 GET http://localhost:3000/contenido/filtrar?categoria=peli
+
+### Agregar un nuevo contenido (película o serie).
+POST http://localhost:3000/contenido
+content-type: application/json
+
+{
+    "titulo": "Seinfeld",
+    "resumen": "Cuatro amigos solteros, el comediante Jerry Seinfeld, el torpe George Constanza, la trabajadora frustrada Elaine Benes y el excéntrico vecino Cosmo Kramer, lidian con las vicisitudes diarias de la vida en la ciudad de Nueva York.",
+    "temporadas": 9,
+    "duracion": null, 
+    "trailer": "https://www.youtube.com/watch?v=hQXKyIG_NS4",
+    "idCategoria": 1,
+    "generos": [12, 4],
+    "actores": [836, 837, 838, 839]
+}
