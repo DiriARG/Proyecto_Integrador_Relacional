@@ -321,11 +321,9 @@ const actualizarContenido = async (req, res) => {
     const contenido = await Contenido.findByPk(id);
 
     if (!contenido) {
-      return res
-        .status(404)
-        .json({
-          error: `Contenido con ID ${id} no encontrado para su actualización 🕵️❗`,
-        });
+      return res.status(404).json({
+        error: `Contenido con ID ${id} no encontrado para su actualización 🕵️❗`,
+      });
     }
 
     // Validamos si los géneros proporcionados existen en la base de datos.
@@ -378,7 +376,10 @@ const actualizarContenido = async (req, res) => {
     // Respondemos con el contenido actualizado y lo mostramos.
     res
       .status(200)
-      .json({ message: "Contenido actualizado correctamente ✅: ", contenido });
+      .json({
+        message: "Contenido actualizado correctamente ✅: ",
+        contenidoActualizado: contenido, // Muestra el contenido actualizado con la clave "contenidoActualizado".
+      });
   } catch (error) {
     console.error(
       `Error al intentar actualizar el contenido con ID:${id}: `,
@@ -390,10 +391,43 @@ const actualizarContenido = async (req, res) => {
   }
 };
 
+// Función para eliminar un contenido por su ID.
+const eliminarContenido = async (req, res) => {
+  const { id } = req.params; // Obtenemos el ID del contenido a eliminar.
+
+  try {
+    // Verificamos si el contenido con el ID proporcionado existe.
+    const contenido = await Contenido.findByPk(id);
+
+    if (!contenido) {
+      return res
+        .status(404)
+        .json({ error: `Contenido con ID ${id} no encontrado 🕵️❗` });
+    }
+
+    // Si existe, procedemos a eliminarlo.
+    await contenido.destroy();
+
+    // Respondemos con éxito mostrando el contenido eliminado.
+    res
+      .status(200)
+      .json({
+        message: "Contenido eliminado correctamente ✅: ",
+        contenidoEliminado: contenido,
+      });
+  } catch (error) {
+    console.error(`Error al eliminar contenido con ID ${id}:`, error);
+    res
+      .status(500)
+      .json({ error: "Error del servidor al eliminar un contenido 🚫⚙️" });
+  }
+};
+
 module.exports = {
   obtenerTodosLosContenidos,
   obtenerContenidoPorID,
   filtrarContenidos,
   agregarContenido,
   actualizarContenido,
+  eliminarContenido,
 };

@@ -41,3 +41,6 @@ content-type: application/json
 {
     "temporadas": 6
 }
+
+### Eliminar un contenido por su ID.
+DELETE http://localhost:3000/contenido/103
