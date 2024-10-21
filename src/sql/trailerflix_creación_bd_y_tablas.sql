@@ -41,7 +41,7 @@ CREATE TABLE contenido (
 CREATE TABLE contenido_generos (
     idContenido INT,
     idGenero INT,
-    FOREIGN KEY (idContenido) REFERENCES contenido(idContenido),
+    FOREIGN KEY (idContenido) REFERENCES contenido(idContenido) ON DELETE CASCADE,  -- Elimina automáticamente las filas relacionadas si se borra un contenido, asi se evita el error de restricción de clave foránea al eliminar un contenido.
     FOREIGN KEY (idGenero) REFERENCES generos(idGenero),
     PRIMARY KEY (idContenido, idGenero)
 );
@@ -50,7 +50,7 @@ CREATE TABLE contenido_generos (
 CREATE TABLE contenido_actores (
     idContenido INT,
     idActor INT,
-    FOREIGN KEY (idContenido) REFERENCES contenido(idContenido),
+    FOREIGN KEY (idContenido) REFERENCES contenido(idContenido) ON DELETE CASCADE,  -- Elimina automáticamente las filas relacionadas si se borra un contenido, asi se evita el error de restricción de clave foránea al eliminar un contenido.
     FOREIGN KEY (idActor) REFERENCES actores(idActor),
     PRIMARY KEY (idContenido, idActor)
 );
