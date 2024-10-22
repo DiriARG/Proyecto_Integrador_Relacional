@@ -1,4 +1,4 @@
-// Importamos los modelos que ya estan asociados en el archivo "asociaciones.js".
+// Importamos los modelos que ya están asociados en el archivo "asociaciones.js".
 const {
   Actor,
   Categoria,
@@ -140,7 +140,7 @@ const filtrarContenidos = async (req, res) => {
 
     // Filtramos por título en caso de que se proporcione.
     if (titulo) {
-      filtro.titulo = { [Op.like]: `%${titulo}%` }; // "LIKE" SQL para buscar coincidencias parciales.
+      filtro.titulo = { [Op.like]: `%${titulo}%` }; // "LIKE" en SQL para buscar coincidencias parciales.
     }
 
     // Creamos un arreglo que contiene objetos que definen las relaciones que se incluirán en la consulta.
@@ -229,7 +229,7 @@ const agregarContenido = async (req, res) => {
     actores,
   } = req.body; // Extraemos datos del cuerpo de la solicitud.
 
-  /* Pequeña explicación: Estas validaciones estan fuera del bloque try porque no dependen de operaciones asíncronicas ni consultas a la base de datos.
+  /* Pequeña explicación: Estas validaciones están fuera del bloque try porque no dependen de operaciones asíncronicas ni consultas a la base de datos.
   Las validaciones relacionadas con la base de datos se colocan en el try para manejar cualquier posible error. */
 
   // Obtenemos los nombres de los campos que se enviaron.
@@ -240,7 +240,7 @@ const agregarContenido = async (req, res) => {
     (campo) => !camposPermitidos.includes(campo)
   );
 
-  // Si hay campos invalidos proceden a mostrarse.
+  // Si hay campos inválidos proceden a mostrarse.
   if (camposInvalidos.length > 0) {
     return res.status(400).json({
       error: `Los siguientes campos no son válidos: ${camposInvalidos.join(
@@ -306,7 +306,7 @@ const agregarContenido = async (req, res) => {
     const nuevoContenido = await Contenido.create({
       titulo,
       resumen,
-      temporadas: temporadas || null, // NULL por si es una pelicula...
+      temporadas: temporadas || null, // NULL por si es una película...
       duracion: duracion || null, // NULL por si es una serie...
       trailer,
       idCategoria,

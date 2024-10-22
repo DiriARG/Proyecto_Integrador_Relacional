@@ -9,7 +9,7 @@ const obtenerInfoAPI = (req, res) => {
       "/contenido/:id": "Obtener un contenido específico por su ID.",
       "/contenido/filtrar?{campo}=valor":
         "Filtrar contenidos por título, género o categoría (Ej: /contenido/filtrar?genero=comedia).",
-      "/contenido": "Agregar una nueva pelicula o serie a la base de datos",
+      "/contenido": "Agregar una nueva película o serie a la base de datos",
       "/contenido/:id": "Actualizar parcialmente un contenido por su ID.",
       "/contenido/:id": "Eliminar un contenido de la base de datos por su ID.",
     },

@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../conexion/database");
 
-// Definimos el modelo de "Categoria"
+// Definimos el modelo de "Categoria".
 const Categoria = sequelize.define(
   "Categoria",
   {
@@ -24,7 +24,7 @@ const Categoria = sequelize.define(
 
 Categoria.associate = (models) => {
   Categoria.hasMany(models.Contenido, {
-    // Se usa "hasMany" porque la relacion es de uno a muchos, osea porque una categoría puede tener muchos contenidos.
+    // Se usa "hasMany" porque la relación es de uno a muchos, osea porque una categoría puede tener muchos contenidos.
     foreignKey: "idCategoria",
     as: "contenidosPorCategoria",
   });

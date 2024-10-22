@@ -18,7 +18,7 @@ GET http://localhost:3000/contenido/filtrar?genero=comedia
 ### Por categoría:
 GET http://localhost:3000/contenido/filtrar?categoria=peli
 
-### Agregar un nuevo contenido (película o serie), en este caso se agrega una serie por eso duracion: null, ya que este campo es para peliculas.
+### Agregar un nuevo contenido (película o serie), en este caso se agrega una serie por eso duración: null, ya que este campo es para películas.
 POST http://localhost:3000/contenido
 content-type: application/json
 
