@@ -204,6 +204,18 @@ const filtrarContenidos = async (req, res) => {
   }
 };
 
+// Array que define cuáles campos son los campos válidos que se pueden enviar en la solicitud para las funciones de agregar un nuevo contenido y actualizar un contenido.
+const camposPermitidos = [
+  "titulo",
+  "resumen",
+  "temporadas",
+  "duracion",
+  "trailer",
+  "idCategoria",
+  "generos",
+  "actores",
+];
+
 // Función para agregar un nuevo contenido (película o serie).
 const agregarContenido = async (req, res) => {
   const {
@@ -217,20 +229,40 @@ const agregarContenido = async (req, res) => {
     actores,
   } = req.body; // Extraemos datos del cuerpo de la solicitud.
 
-  try {
-    // Validación de campos obligatorios.
-    if (
-      !titulo ||
-      !resumen ||
-      !trailer ||
-      !idCategoria ||
-      (temporadas === undefined && duracion === undefined) // Nos aseguramos que uno de los dos campos sea ingresado (temporadas o duración).
-    ) {
-      return res
-        .status(400)
-        .json({ error: "Todos los campos son obligatorios 🚫!" });
-    }
+  /* Pequeña explicación: Estas validaciones estan fuera del bloque try porque no dependen de operaciones asíncronicas ni consultas a la base de datos.
+  Las validaciones relacionadas con la base de datos se colocan en el try para manejar cualquier posible error. */
 
+  // Obtenemos los nombres de los campos que se enviaron.
+  const camposEnviados = Object.keys(req.body); // "Objetc.keys(req.body)" genera un array con los nombres de los campos que se enviaron en el req.body .
+
+  // Verificamos si algún campo enviado no está permitido.
+  const camposInvalidos = camposEnviados.filter(
+    (campo) => !camposPermitidos.includes(campo)
+  );
+
+  // Si hay campos invalidos proceden a mostrarse.
+  if (camposInvalidos.length > 0) {
+    return res.status(400).json({
+      error: `Los siguientes campos no son válidos: ${camposInvalidos.join(
+        ", "
+      )}`,
+    });
+  }
+
+  // Validación de campos obligatorios.
+  if (
+    !titulo ||
+    !resumen ||
+    !trailer ||
+    !idCategoria ||
+    (temporadas === undefined && duracion === undefined) // Nos aseguramos que uno de los dos campos sea ingresado (temporadas o duración).
+  ) {
+    return res
+      .status(400)
+      .json({ error: "Todos los campos son obligatorios 🚫!" });
+  }
+
+  try {
     // Validamos que la categoría exista, osea, una película o una serie.
     const categoria = await Categoria.findByPk(idCategoria);
     if (!categoria) {
@@ -316,6 +348,21 @@ const actualizarContenido = async (req, res) => {
     actores,
   } = req.body;
 
+  // Validar campos no permitidos.
+  const camposEnviados = Object.keys(req.body);
+  const camposInvalidos = camposEnviados.filter(
+    (campo) => !camposPermitidos.includes(campo)
+  );
+
+  // Si hay campos no permitidos, respondemos con un error.
+  if (camposInvalidos.length > 0) {
+    return res.status(400).json({
+      error: `Los siguientes campos no son válidos: ${camposInvalidos.join(
+        ", "
+      )}`,
+    });
+  }
+
   try {
     // Verificamos si el contenido con el ID proporcionado existe antes de cualquier validación.
     const contenido = await Contenido.findByPk(id);
@@ -374,12 +421,10 @@ const actualizarContenido = async (req, res) => {
     }
 
     // Respondemos con el contenido actualizado y lo mostramos.
-    res
-      .status(200)
-      .json({
-        message: "Contenido actualizado correctamente ✅: ",
-        contenidoActualizado: contenido, // Muestra el contenido actualizado con la clave "contenidoActualizado".
-      });
+    res.status(200).json({
+      message: "Contenido actualizado correctamente ✅: ",
+      contenidoActualizado: contenido, // Muestra el contenido actualizado con la clave "contenidoActualizado".
+    });
   } catch (error) {
     console.error(
       `Error al intentar actualizar el contenido con ID:${id}: `,
@@ -409,12 +454,10 @@ const eliminarContenido = async (req, res) => {
     await contenido.destroy();
 
     // Respondemos con éxito mostrando el contenido eliminado.
-    res
-      .status(200)
-      .json({
-        message: "Contenido eliminado correctamente ✅: ",
-        contenidoEliminado: contenido,
-      });
+    res.status(200).json({
+      message: "Contenido eliminado correctamente ✅: ",
+      contenidoEliminado: contenido,
+    });
   } catch (error) {
     console.error(`Error al eliminar contenido con ID ${id}:`, error);
     res
