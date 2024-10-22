@@ -70,7 +70,7 @@ const obtenerTodosLosContenidos = async (req, res) => {
     res.status(200).json(contenidoData);
   } catch (error) {
     // Registramos el error en la consola para su seguimiento.
-    console.error("Error al obtener los contenidos: ", error);
+    console.error("Error al obtener todos los contenidos: ", error);
     // Respondemos con un mensaje al cliente.
     res.status(500).json({
       error: "Error del servidor al devolver todos los contenidos 🚫⚙️",
@@ -268,7 +268,7 @@ const agregarContenido = async (req, res) => {
     if (!categoria) {
       return res
         .status(404)
-        .json({ error: "La categoría especificada no existe." });
+        .json({ error: "La categoría especificada no existe 🚫!" });
     }
 
     // Validamos si los géneros proporcionados existen en la base de datos.
@@ -284,7 +284,7 @@ const agregarContenido = async (req, res) => {
       if (generosDB.length !== generos.length) {
         return res
           .status(400)
-          .json({ error: "Uno o más géneros proporcionados no existen." });
+          .json({ error: "Uno o más géneros proporcionados no existen 🚫!" });
       }
     }
 
@@ -298,7 +298,7 @@ const agregarContenido = async (req, res) => {
       if (actoresDB.length !== actores.length) {
         return res
           .status(400)
-          .json({ error: "Uno o más actores proporcionados no existen." });
+          .json({ error: "Uno o más actores proporcionados no existen 🚫!" });
       }
     }
 
@@ -383,7 +383,7 @@ const actualizarContenido = async (req, res) => {
       if (generosDB.length !== generos.length) {
         return res
           .status(400)
-          .json({ error: "Uno o más géneros proporcionados no existen." });
+          .json({ error: "Uno o más géneros proporcionados no existen 🚫!" });
       }
     }
 
@@ -397,7 +397,7 @@ const actualizarContenido = async (req, res) => {
       if (actoresDB.length !== actores.length) {
         return res
           .status(400)
-          .json({ error: "Uno o más actores proporcionados no existen." });
+          .json({ error: "Uno o más actores proporcionados no existen 🚫!" });
       }
     }
 
