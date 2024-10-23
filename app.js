@@ -1,6 +1,7 @@
-// Importamos los módulos que utilizaremos (express y morgan).
+// Importamos los módulos que utilizaremos (express, morgan, swaggerUi y swaggerDocs).
 const express = require("express");
 const morgan = require("morgan");
+const { swaggerUi, swaggerDocs } = require("./src/utils/swaggerConfig");
 
 // Importamos las rutas definidas en otro archivo.
 const rutaBienvenida = require("./src/routes/ruta_principal"); // Ruta de bienvenida.
@@ -19,6 +20,10 @@ app.disable("x-powered-by");
 app.use(express.json());
 app.use(morgan("dev"));
 
+// Sirve la documentación de Swagger en "/api-docs".
+// Swagger UI estará disponible para cualquier usuario que acceda a esta ruta.
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
 // Rutas.
 app.use("/", rutaBienvenida);
 app.use("/contenido", contenidoRoutes);
@@ -31,4 +36,5 @@ app.use((req, res) => {
 // Inicializamos el servidor.
 app.listen(PORT, () => {
   console.log(`Servidor escuchando en: http://localhost:${PORT}`);
+  console.log(`Documentación Swagger de la API en http://localhost:${PORT}/api-docs`);
 });
