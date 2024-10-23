@@ -17,6 +17,8 @@ GET http://localhost:3000/contenido/filtrar?titulo=it - capitulo
 GET http://localhost:3000/contenido/filtrar?genero=comedia 
 ### Por categoría:
 GET http://localhost:3000/contenido/filtrar?categoria=peli
+### Filtrar por múltiples criterios a la vez (de manera conjunta):
+GET http://localhost:3000/contenido/filtrar?titulo=Mandalorian&genero=Sci-Fi&categoria=Serie
 
 ### Agregar un nuevo contenido (película o serie), en este caso se agrega una serie por eso duración: null, ya que este campo es para películas.
 POST http://localhost:3000/contenido
