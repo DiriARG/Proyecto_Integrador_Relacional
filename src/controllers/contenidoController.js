@@ -283,7 +283,7 @@ const agregarContenido = async (req, res) => {
       // Si el número de géneros encontrados no coincide con los proporcionados, enviamos un error.
       if (generosDB.length !== generos.length) {
         return res
-          .status(400)
+          .status(404)
           .json({ error: "Uno o más géneros proporcionados no existen 🚫!" });
       }
     }
@@ -297,7 +297,7 @@ const agregarContenido = async (req, res) => {
 
       if (actoresDB.length !== actores.length) {
         return res
-          .status(400)
+          .status(404)
           .json({ error: "Uno o más actores proporcionados no existen 🚫!" });
       }
     }
