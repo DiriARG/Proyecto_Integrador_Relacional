@@ -104,7 +104,7 @@ const obtenerContenidoPorID = async (req, res) => {
     if (!contenido) {
       return res
         .status(404)
-        .json({ error: `Contenido con ID:${id} no encontrado 🕵️❗` });
+        .json({ error: `Contenido con ID: ${id} no encontrado 🕵️❗` });
     }
 
     // Si existe, formateamos los datos.
@@ -123,7 +123,7 @@ const obtenerContenidoPorID = async (req, res) => {
 
     res.status(200).json(contenidoData);
   } catch (error) {
-    console.error(`Error al obtener el contenido con ID:${id}: `, error);
+    console.error(`Error al obtener el contenido con ID: ${id}: `, error);
     res
       .status(500)
       .json({ error: "Error del servidor al obtener el contenido 🚫⚙️" });
@@ -427,7 +427,7 @@ const actualizarContenido = async (req, res) => {
     });
   } catch (error) {
     console.error(
-      `Error al intentar actualizar el contenido con ID:${id}: `,
+      `Error al intentar actualizar el contenido con ID: ${id}: `,
       error
     );
     res
