@@ -136,7 +136,7 @@ Al instalar estos paquetes, se creará el archivo `package-lock.json` y la carpe
 
 ## Estructura del proyecto 📂:
 
-Así será la estructura que encontraremos en nuestro editor de código fuente, en mi caso, Visual Studio Code (puede variar la estructura en caso de haber instalado los archivos de forma individual).
+Esta es la estructura del proyecto en el editor de código fuente (en este caso, Visual Studio Code). Puede variar si los archivos se han descargado de forma individual.
 
 ```plaintext
 /node_modules
@@ -240,21 +240,22 @@ Así será la estructura que encontraremos en nuestro editor de código fuente, 
 
 ## Rutas de la API REST 🛤️:
 
-Para poder comprobar la funcionalidad de cada ruta de la API, puedes utilizar la extensión `REST Client` del marketplace de Visual Studio Code o cualquier otra herramienta que tenga como finalidad el testeo de una API, como puede ser `Postman`. Los links de descarga se encuentran en [Recursos](#recursos-).<br>
+Para comprobar la funcionalidad de cada ruta de la API, puedes utilizar la extensión `REST Client` del marketplace de Visual Studio Code o cualquier otra herramienta que tenga como finalidad el testeo de una API, como puede ser `Postman`. Los links de descarga se encuentran en [Recursos](#recursos-).<br>
+Si prefieres utilizar **Postman**, en el proyecto se incluye un archivo dentro de la carpeta `/tests` llamado `Proyecto_Integrador_CRUD_Node.js_MySQL.postman_collection.json`. **Importando este archivo en Postman**, tendrás acceso a todas las rutas de la API preconfiguradas para su fácil testeo. <br>
 Además, este proyecto incluye la **documentación interactiva de la API** mediante `Swagger`, a la cual se puede acceder cuando la aplicación está corriendo, utilizando la ruta `/api-docs`. Después de ejecutar la aplicación, verás un mensaje en la terminal como este:
 
 ```bash
    Servidor escuchando en: http://localhost:<PORT>
-   Documentación Swagger de la API en http://localhost:<PORT>/api-docs
+   Documentación Swagger de la API en: http://localhost:<PORT>/api-docs
 ```
 
 Dentro del archivo `api.http` (funcional con `REST Client`) encontrarás las siguientes rutas con sus respectivas finalidades:
 | PETICIÓN | URL | DESCRIPCIÓN |
 |:--------:|-----|-------------|
-| GET | / | Ruta principal (Devuelve un mensaje de bienvenida y un poco de información sobre la API). |
-| GET | /contenido | Obtener todos los contenidos (películas y series). |
-| GET | /contenido/:id | Obtener un contenido específico por su ID. |
-| GET | /contenido/filtrar | Filtrar contenidos por título, género o categoría. Se puede incluir el parámetro titulo, genero, categoria o los tres en la query string. |
-| POST | /contenido | Agregar un nuevo contenido (película o serie). |
-| PATCH | /contenido/:id | Actualizar parcialmente un contenido por su ID. |
-| DELETE | /contenido/:id | Eliminar un contenido por su ID.|
+| GET | `/` | Ruta principal (Devuelve un mensaje de bienvenida y un poco de información sobre la API). |
+| GET | `/contenido` | Obtener todos los contenidos (películas y series). |
+| GET | `/contenido/:id` | Obtener un contenido específico por su ID. |
+| GET | `/contenido/filtrar` | Filtrar contenidos por `título`, `género` o `categoría`. Se puede incluir el parámetro titulo, genero, categoria o los tres en la query string. |
+| POST | `/contenido` | Agregar un nuevo contenido (película o serie). |
+| PATCH | `/contenido/:id` | Actualizar parcialmente un contenido por su ID. |
+| DELETE | `/contenido/:id` | Eliminar un contenido por su ID.|

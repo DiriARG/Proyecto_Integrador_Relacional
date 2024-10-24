@@ -36,5 +36,5 @@ app.use((req, res) => {
 // Inicializamos el servidor.
 app.listen(PORT, () => {
   console.log(`Servidor escuchando en: http://localhost:${PORT}`);
-  console.log(`Documentación Swagger de la API en http://localhost:${PORT}/api-docs`);
+  console.log(`Documentación Swagger de la API en: http://localhost:${PORT}/api-docs`);
 });
