@@ -383,7 +383,7 @@ router.post("/", contenidoController.agregarContenido);
  *   patch:
  *     summary: Actualiza parcialmente un contenido por su ID.
  *     description: |
- *       Actualiza uno o más campos de un contenido existente (película o serie) en la base de datos.
+ *       Endpoint para actualizar uno o más campos de un contenido existente (película o serie) en la base de datos.
  *       Los campos permitidos para la actualización son: "titulo", "resumen", "temporadas", "duracion", "trailer", "idCategoria", "generos" y "actores".
  *       Los géneros y actores proporcionados deben existir en la base de datos, de lo contrario se devolverá un error.
  *     tags: [Contenido]
@@ -448,7 +448,7 @@ router.post("/", contenidoController.agregarContenido);
  *                   properties:
  *                     idContenido:
  *                       type: integer
- *                       description: ID del contenido creado.
+ *                       description: ID del contenido actualizado.
  *                       example: 23
  *                     titulo:
  *                       type: string
@@ -508,6 +508,84 @@ router.post("/", contenidoController.agregarContenido);
 router.patch("/:id", contenidoController.actualizarContenido);
 
 // Eliminar un contenido por su ID.
+/**
+ * @swagger
+ * /contenido/{id}:
+ *   delete:
+ *     summary: Eliminar un contenido por ID
+ *     description: Endpoint para eliminar un contenido existente (película o serie) de la base de datos por su ID.
+ *     tags: [Contenido]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID del contenido a eliminar.        
+ *         schema:
+ *           type: integer
+ *           example: 97
+ *     responses:
+ *       200:
+ *         description: Contenido eliminado correctamente.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Contenido eliminado correctamente ✅: "
+ *                 contenidoEliminado:
+ *                   type: object
+ *                   properties:
+ *                     idContenido:
+ *                       type: integer
+ *                       description: ID del contenido eliminado.
+ *                       example: 97
+ *                     titulo:
+ *                       type: string
+ *                       description: Título del contenido.
+ *                       example: "La Familia Addams"
+ *                     resumen:
+ *                       type: string
+ *                       description: Resumen del contenido.
+ *                       example: "El delirante y gótico estilo de vida de la peculiar familia Addams se ve amenazado peligrosamente cuando el codicioso dúo que forman madre e hijo, con la ayuda de un abogado sin ningún escrúpulos, conspiran para hacerse con la fortuna familiar... (No se pierdan las locutras de Gomez, Morticia, Tío Lucas, Merlina, El tío Cosas, Dedos y Largo)"
+ *                     temporadas:
+ *                       type: integer
+ *                       description: Número de temporadas (si es una serie).
+ *                       example: null
+ *                     duracion:
+ *                       type: integer
+ *                       description: Duración en minutos (si es una película).
+ *                       example: "101 minutos"
+ *                     trailer:
+ *                       type: string
+ *                       description: URL del tráiler.
+ *                       example: "https://www.youtube.com/embed/G388UMkJIBE"
+ *                     idCategoria:
+ *                       type: integer
+ *                       description: ID de la categoría asociada.
+ *                       example: 2
+ *       404:
+ *         description: Contenido no encontrado.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Contenido con ID {id} no encontrado 🕵️❗
+ *       500:
+ *         description: Error del servidor.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Error del servidor al eliminar un contenido 🚫⚙️
+ */
 router.delete("/:id", contenidoController.eliminarContenido);
 
 // Exportamos el router para que pueda ser utilizado en 'app.js' u otros archivos.
