@@ -23,6 +23,7 @@ En este proyecto se desarrolla una aplicación utilizando Node.js (Express JS) y
 - [Configuración del archivo .env (Environment Variables)](#configuración-del-archivo-env-environment-variables-%EF%B8%8F)
 - [Estructura del proyecto](#estructura-del-proyecto-)
 - [Descripción de archivos](#descripción-de-archivos-)
+- [Rutas de la API REST](#rutas-de-la-api-rest-%EF%B8%8F)
 
 ## Previo a iniciar 🕒:
 
@@ -114,7 +115,7 @@ Este apartado esta orientado a las personas que simplemente quieran descargar lo
 Antes de comenzar, **asegúrate** de haber completado la [Configuración de la Base de Datos](#configuración-de-la-base-de-datos-️). Si ya realizaste estos pasos y tienes la estructura del proyecto como se muestra arriba, puedes continuar con lo siguiente:
 
 - Abre la terminal e inicializa un nuevo proyecto con `npm init -y`. Esto creará el archivo `package.json`.
-- Luego instalamos las dependencias necesarias: **Express JS** (entorno para desarrollar la API), **Sequelize** (biblioteca de modelado de objetos relacionales para MySQL y Node.js), **Morgan** (middleware de registro de solicitudes HTTP), **swagger-jsdoc** (genera documentación de API a partir de comentarios JSDoc en el código) y **Swagger UI Express** (sirve una interfaz visual para interactuar con la documentación generada) con el siguiente comando:
+- Instala las dependencias necesarias: **Express JS** (entorno para desarrollar la API), **Sequelize** (biblioteca de modelado de objetos relacionales para MySQL y Node.js), **Morgan** (middleware de registro de solicitudes HTTP), **swagger-jsdoc** (genera documentación de API a partir de comentarios JSDoc en el código) y **Swagger UI Express** (sirve una interfaz visual para interactuar con la documentación generada) con el siguiente comando:
 
 ```bash
    npm i express sequelize morgan swagger-jsdoc swagger-ui-express
@@ -236,3 +237,24 @@ Así será la estructura que encontraremos en nuestro editor de código fuente, 
 - **README.md**: Archivo guía para entender y comenzar a trabajar con este proyecto.
 
 - **trailerflix_1.png**: Imagen que muestra el modelo relacional de la base de datos "trailerflix", con sus tablas y relaciones.
+
+## Rutas de la API REST 🛤️:
+
+Para poder comprobar la funcionalidad de cada ruta de la API, puedes utilizar la extensión `REST Client` del marketplace de Visual Studio Code o cualquier otra herramienta que tenga como finalidad el testeo de una API, como puede ser `Postman`. Los links de descarga se encuentran en [Recursos](#recursos-).<br>
+Además, este proyecto incluye la **documentación interactiva de la API** mediante `Swagger`, a la cual se puede acceder cuando la aplicación está corriendo, utilizando la ruta `/api-docs`. Después de ejecutar la aplicación, verás un mensaje en la terminal como este:
+
+```bash
+   Servidor escuchando en: http://localhost:<PORT>
+   Documentación Swagger de la API en http://localhost:<PORT>/api-docs
+```
+
+Dentro del archivo `api.http` (funcional con `REST Client`) encontrarás las siguientes rutas con sus respectivas finalidades:
+| PETICIÓN | URL | DESCRIPCIÓN |
+|:--------:|-----|-------------|
+| GET | / | Ruta principal (Devuelve un mensaje de bienvenida y un poco de información sobre la API). |
+| GET | /contenido | Obtener todos los contenidos (películas y series). |
+| GET | /contenido/:id | Obtener un contenido específico por su ID. |
+| GET | /contenido/filtrar | Filtrar contenidos por título, género o categoría. Se puede incluir el parámetro titulo, genero, categoria o los tres en la query string. |
+| POST | /contenido | Agregar un nuevo contenido (película o serie). |
+| PATCH | /contenido/:id | Actualizar parcialmente un contenido por su ID. |
+| DELETE | /contenido/:id | Eliminar un contenido por su ID.|
