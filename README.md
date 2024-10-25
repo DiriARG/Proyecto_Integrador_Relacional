@@ -23,6 +23,7 @@ En este proyecto se desarrolla una aplicación utilizando Node.js (Express JS) y
 - [Configuración del archivo .env (Environment Variables)](#configuración-del-archivo-env-environment-variables-%EF%B8%8F)
 - [Estructura del proyecto](#estructura-del-proyecto-)
 - [Descripción de archivos](#descripción-de-archivos-)
+- [Inicialización del servidor](#inicialización-del-servidor-️)
 - [Rutas de la API REST](#rutas-de-la-api-rest-%EF%B8%8F)
 - [Ejemplos de uso](#ejemplos-de-uso-)
 - [Recursos](#recursos-)
@@ -239,6 +240,22 @@ Esta es la estructura del proyecto en el editor de código fuente (en este caso,
 - **README.md**: Archivo guía para entender y comenzar a trabajar con este proyecto.
 
 - **trailerflix_1.png**: Imagen que muestra el modelo relacional de la base de datos "trailerflix", con sus tablas y relaciones.
+
+## Inicialización del Servidor 🖥️
+
+El archivo `app.js` es el punto de entrada de la aplicación y se encarga de inicializar el servidor, configurando las rutas y los middlewares necesarios para que la API funcione correctamente.
+
+Para iniciar el servidor, puedes usar uno de los siguientes comandos en la terminal:
+
+- **`npm run dev`**: Este comando inicia la aplicación en modo de desarrollo. Utiliza la opción `--watch`, lo que significa que el servidor se reiniciará automáticamente cada vez que realices cambios en el código. Esto es útil para el desarrollo, ya que no tendrás que reiniciar manualmente el servidor cada vez.
+
+- **`npm start`**: Este comando inicia la aplicación en modo producción. Ejecuta `node app.js`, lo que inicia el servidor sin las características de reinicio automático. Es ideal para entornos en los que deseas que el servidor se ejecute de manera estable sin interrupciones.
+
+- **`node app.js`**: Este comando también puede utilizarse para iniciar la aplicación directamente, funcionando igual que `npm start`, pero sin los scripts de npm.
+
+- **`node --watch app.js`**: Similar a `npm run dev`, este comando inicia el servidor en modo de desarrollo y se reiniciará automáticamente al detectar cambios en el código.
+
+Asegúrate de haber configurado correctamente el archivo `.env` antes de iniciar el servidor, ya que contiene las variables de entorno necesarias para la conexión a la base de datos y otras configuraciones importantes.
 
 ## Rutas de la API REST 🛤️:
 
@@ -707,6 +724,7 @@ DELETE http://localhost:3000/contenido/113
   }
 }
 ```
+
 **Código 404**:
 
 - **Descripción**: Contenido no encontrado.
