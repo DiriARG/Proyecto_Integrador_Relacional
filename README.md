@@ -24,6 +24,8 @@ En este proyecto se desarrolla una aplicación utilizando Node.js (Express JS) y
 - [Estructura del proyecto](#estructura-del-proyecto-)
 - [Descripción de archivos](#descripción-de-archivos-)
 - [Rutas de la API REST](#rutas-de-la-api-rest-%EF%B8%8F)
+- [Ejemplos de uso](#ejemplos-de-uso-)
+- [Recursos](#recursos-)
 
 ## Previo a iniciar 🕒:
 
@@ -259,3 +261,499 @@ Dentro del archivo `api.http` (funcional con `REST Client`) encontrarás las sig
 | POST | `/contenido` | Agregar un nuevo contenido (película o serie). |
 | PATCH | `/contenido/:id` | Actualizar parcialmente un contenido por su ID. |
 | DELETE | `/contenido/:id` | Eliminar un contenido por su ID.|
+
+## Ejemplos de uso 🧪:
+
+Estas acciones se realizan en el archivo `api.http`. Cabe aclarar que el puerto puede variar según su configuración; en este caso, se está utilizando el 3000: <br>
+
+**GET**: **Entramos a la ruta principal**.
+
+**Ejemplo de solicitud**:
+
+```json
+
+GET http://localhost:3000/
+
+```
+
+**Respuesta exitosa (200):** Mensaje de bienvenida y descripción de la API.
+
+```json
+{
+  "mensaje": "Bienvenido a la API de streaming Trailerflix! 🎬🍿📺",
+  "descripcion": "Esta API te permite realizar operaciones CRUD (consultar, agregar, actualizar y eliminar) sobre el contenido disponible en la plataforma Trailerflix, como películas y series. Además, puedes filtrar el contenido por diferentes criterios como género, título o categoría",
+  "rutas": {
+    "/contenido": "Devuelve todos los contenidos de la base de datos.",
+    "/contenido/:id": "Obtener un contenido específico por su ID.",
+    "/contenido/filtrar?{campo}=valor": "Filtrar contenidos por título, género o categoría (Ej: /contenido/filtrar?genero=comedia).",
+    "/contenido (POST)": "Agregar una nueva película o serie a la base de datos",
+    "/contenido/:id (PATCH)": "Actualizar parcialmente un contenido por su ID.",
+    "/contenido/:id (DELETE)": "Eliminar un contenido de la base de datos por su ID."
+  },
+  "instrucciones": "Para obtener más información sobre el uso de la API, por favor revisa el archivo README.md"
+}
+```
+
+**GET**: **Obtener todos los contenidos**.
+
+**Ejemplo de solicitud**:
+
+```json
+
+GET http://localhost:3000/contenido
+
+```
+
+**Respuesta exitosa (200):** Devuelve una lista de todos los contenidos disponibles en la base de datos.
+
+```json
+[
+  {
+    "ID": 1,
+    "Título": "The Mandalorian",
+    "Categoría": "Serie",
+    "Resumen": "Ambientada tras la caída del Imperio y antes de la aparición de la Primera Orden, la Serie sigue los pasos de un pistolero solitario en las aventuras que protagoniza en los confines de la galaxia, donde no alcanza la autoridad de la Nueva República.",
+    "Temporadas/Duración": "2",
+    "Géneros": "Sci-Fi, Fantasía, Acción",
+    "Actores": "Pedro Pascal, Carl Weathers, Misty Rosas, Chris Bartlett, Rio Hackford, Giancarlo Esposito",
+    "Tráiler": "https://www.youtube.com/embed/aOC8E8z_ifw"
+  },
+  {
+    "ID": 2,
+    "Título": "The Umbrella Academy",
+    "Categoría": "Serie",
+    "Resumen": "La muerte de su padre reúne a unos hermanos distanciados y con extraordinarios poderes que descubren impactantes secretos y una amenaza que se cierne sobre la humanidad.",
+    "Temporadas/Duración": "1",
+    "Géneros": "Sci-Fi, Fantasía, Drama",
+    "Actores": "Tom Hopper, David Castañeda, Emmy Raver-Lampman, Robert Sheehan, Aidan Gallagher, Elliot Page",
+    "Tráiler": "https://www.youtube.com/embed/KHucKOK-Vik"
+  },
+  ...
+]
+```
+
+**Posibles errores**: <br>
+**Código 404**:
+
+- **Descripción**: No se encontraron contenidos en la base de datos.
+- **Ejemplo de respuesta**:
+
+```json
+{
+  "error": "No se encontraron contenidos disponibles 🕵️❗"
+}
+```
+
+**Código 500**:
+
+- **Descripción**: Error interno del servidor al procesar la solicitud.
+- **Ejemplo de respuesta**:
+
+```json
+{
+  "error": "Error del servidor al devolver todos los contenidos 🚫⚙️"
+}
+```
+
+**GET**: **Obtener un contenido específico por su ID**.
+
+**Ejemplo de solicitud**:
+
+```json
+GET http://localhost:3000/contenido/1
+```
+
+**Respuesta exitosa (200):** Detalles del contenido con el ID proporcionado.
+
+```json
+{
+  "ID": 1,
+  "Título": "The Mandalorian",
+  "Categoría": "Serie",
+  "Resumen": "Ambientada tras la caída del Imperio y antes de la aparición de la Primera Orden, la Serie sigue los pasos de un pistolero solitario en las aventuras que protagoniza en los confines de la galaxia, donde no alcanza la autoridad de la Nueva República.",
+  "Temporadas/Duración": 2,
+  "Géneros": "Sci-Fi, Fantasía, Acción",
+  "Actores": "Pedro Pascal, Carl Weathers, Misty Rosas, Chris Bartlett, Rio Hackford, Giancarlo Esposito",
+  "Tráiler": "https://www.youtube.com/embed/aOC8E8z_ifw"
+}
+```
+
+**Posibles errores**: <br>
+**Código 404**:
+
+- **Descripción**: No se encontró el contenido con el ID proporcionado.
+- **Ejemplo de respuesta**:
+
+```json
+{
+  "error": "Contenido con ID: 1 no encontrado 🕵️❗"
+}
+```
+
+**Código 500**:
+
+- **Descripción**: Error interno del servidor al procesar la solicitud.
+- **Ejemplo de respuesta**:
+
+```json
+{
+  "error": "Error del servidor al obtener el contenido 🚫⚙️"
+}
+```
+
+**GET**: **Filtrar contenidos por "titulo", "genero" o "categoria" (búsqueda parcial).**
+
+**Por titulo**: <br>
+**Ejemplo de solicitud**:
+
+```json
+GET http://localhost:3000/contenido/filtrar?titulo=it - capitulo
+```
+
+**Respuesta exitosa (200):** Contenidos que coincidan parcialmente con el título
+
+```json
+[
+  {
+    "ID": 33,
+    "Título": "IT - Capítulo 2",
+    "Categoría": "Película",
+    "Resumen": "En este segundo capitulo Han pasado 27 años desde que el \"Club de los Perdedores\", formado por Bill, Berverly, Richie, Ben, Eddie, Mike y Stanley, se enfrentaran al macabro y despiadado Pennywise (Bill Skarsgård). En cuanto tuvieron oportunidad, abandonaron el pueblo de Derry, en el estado de Maine, que tantos problemas les había ocasionado. Sin embargo, ahora, siendo adultos, parece que no pueden escapar de su pasado. Todos deberán enfrentarse de nuevo al temible payaso para descubrir si de verdad están preparados para superar sus traumas de la infancia.",
+    "Temporadas/Duración": "97 minutos",
+    "Géneros": "Fantasía, Suspenso, Terror",
+    "Actores": "Jessica Chastain, Bill Skarsgård, Bill Hader, James McAvoy, Isaiah Mustafa, Jay Ryan",
+    "Tráiler": "https://www.youtube.com/embed/hZeFeYSmBcg"
+  }
+]
+```
+
+**Por genero**: <br>
+**Ejemplo de solicitud**:
+
+```json
+GET http://localhost:3000/contenido/filtrar?genero=comedia
+```
+
+**Respuesta exitosa (200):** Contenidos que coincidan con el género "Comedia".
+
+```json
+[
+  {
+    "ID": 8,
+    "Título": "The Big Bang Theory",
+    "Categoría": "Serie",
+    "Resumen": "Leonard y Sheldon son dos físicos que comparten trabajo y apartamento. La Serie comienza con la mudanza de Penny, su nueva y atractiva vecina, y hace hincapié en la dificultad de los físicos para relacionarse con personas fuera de su entorno para dar lugar a situaciones cómicas.",
+    "Temporadas/Duración": 12,
+    "Géneros": "Comedia",
+    "Actores": "Jim Parsons, Johnny Galecki, Kaley Cuoco, Simon Helberg, Kunal Nayyar, Melissa Rauch, Mayim Bialik",
+    "Tráiler": "https://www.youtube.com/embed/WBb3fojgW0Q"
+  },
+  {
+    "ID": 9,
+    "Título": "Friends",
+    "Categoría": "Serie",
+    "Resumen": "Friends narra las aventuras y desventuras de seis jóvenes de Nueva York: Rachel, Monica, Phoebe, Ross, Chandler y Joey. Ellos forman una unida pandilla de amigos que viven en Manhattan y que suelen reunirse en sus apartamentos o en su bar habitual cafetería, el Central Perk. A pesar de los numerosos cambios que se producen en sus vidas, su amistad es inquebrantable en la dura batalla por salir adelante en sus periplos profesionales y personales.",
+    "Temporadas/Duración": 10,
+    "Géneros": "Comedia",
+    "Actores": "Jennifer Aniston, Courteney Cox, Lisa Kudrow, David Schwimmer, Matthew Perry, Matt LeBlanc",
+    "Tráiler": "https://www.youtube.com/embed/ekYGfU0XIx0"
+  },
+  ...
+]
+```
+
+**Por categoria**: <br>
+**Ejemplo de solicitud**:
+
+```json
+GET http://localhost:3000/contenido/filtrar?categoria=peli
+```
+
+**Respuesta exitosa (200):** Contenidos de la categoría "Película".
+
+```json
+[
+  {
+    "ID": 26,
+    "Título": "Enola Holmes",
+    "Categoría": "Película",
+    "Resumen": "La hermana menor de Sherlock, descubre que su madre ha desaparecido y se dispone a encontrarla. En su búsqueda, saca a relucir el sabueso que corre por sus venas y se encuentra con una conspiración que gira en torno a un misterioso lord, demostrando que su ilustre hermano no es el único talento en la familia.",
+    "Temporadas/Duración": "97 minutos",
+    "Géneros": "Drama, Ficción, Misterio",
+    "Actores": "Helena Bonham Carter, Millie Bobby Brown, Henry Cavill, Sam Claflin, Louis Partridge, Adeel Akhtar",
+    "Tráiler": "https://www.youtube.com/embed/3t1g2pa355k"
+  },
+  {
+    "ID": 27,
+    "Título": "Guasón",
+    "Categoría": "Película",
+    "Resumen": "Arthur Fleck (Phoenix) es un hombre ignorado por la sociedad, cuya motivación en la vida es hacer reír. Pero una Serie de trágicos acontecimientos le llevarán a ver el mundo de otra forma. Película basada en el popular personaje de DC Comics Joker, conocido como archivillano de Batman, pero que en este film tomará un cariz más realista y oscuro.",
+    "Temporadas/Duración": "97 minutos",
+    "Géneros": "Crimen, Suspenso",
+    "Actores": "Joaquin Phoenix, Robert De Niro, Zazie Beetz, Frances Conroy, Brett Cullen, Shea Whigham",
+    "Tráiler": "https://www.youtube.com/embed/zAGVQLHvwOY"
+  },
+  ...
+]
+```
+
+**Filtrar por múltiples criterios a la vez (de manera conjunta)**:<br>
+**Ejemplo de solicitud**:
+
+```json
+GET http://localhost:3000/contenido/filtrar?titulo=Mandalorian&genero=Sci-Fi&categoria=Serie
+```
+
+**Respuesta exitosa (200):** Detalles del contenido llamado "The Mandalorian".
+
+```json
+[
+  {
+    "ID": 1,
+    "Título": "The Mandalorian",
+    "Categoría": "Serie",
+    "Resumen": "Ambientada tras la caída del Imperio y antes de la aparición de la Primera Orden, la Serie sigue los pasos de un pistolero solitario en las aventuras que protagoniza en los confines de la galaxia, donde no alcanza la autoridad de la Nueva República.",
+    "Temporadas/Duración": 2,
+    "Géneros": "Sci-Fi",
+    "Actores": "Pedro Pascal, Carl Weathers, Misty Rosas, Chris Bartlett, Rio Hackford, Giancarlo Esposito",
+    "Tráiler": "https://www.youtube.com/embed/aOC8E8z_ifw"
+  }
+]
+```
+
+**Posibles errores**: <br>
+**Código 404**:
+
+- **Descripción**: No se encontraron contenidos que coincidan con los filtros proporcionados.
+- **Ejemplo de respuesta**:
+
+```json
+{
+  "error": "No se encontraron contenidos con los filtros proporcionados 🕵️❗"
+}
+```
+
+**Código 500**:
+
+- **Descripción**: Error interno del servidor al procesar la solicitud.
+- **Ejemplo de respuesta**:
+
+```json
+{
+  "error": "Error del servidor al filtrar los contenidos 🚫⚙️"
+}
+```
+
+**POST**: **Agregar un nuevo contenido (película o serie)**.
+
+**Ejemplo de solicitud**:
+
+```json
+
+POST http://localhost:3000/contenido
+content-type: application/json
+
+{
+    "titulo": "Seinfeld",
+    "resumen": "Cuatro amigos solteros, el comediante Jerry Seinfeld, el torpe George Constanza, la trabajadora frustrada Elaine Benes y el excéntrico vecino Cosmo Kramer, lidian con las vicisitudes diarias de la vida en la ciudad de Nueva York.",
+    "temporadas": 9,
+    "duracion": null,
+    "trailer": "https://www.youtube.com/watch?v=hQXKyIG_NS4",
+    "idCategoria": 1,
+    "generos": [12, 4],
+    "actores": [836, 837, 838, 839]
+}
+
+```
+
+**Respuesta exitosa (201):** Confirmación de que el contenido se ha creado con éxito.
+
+```json
+{
+  "message": "Nuevo contenido creado ✅: ",
+  "nuevoContenido": {
+    "idContenido": 113,
+    "titulo": "Seinfeld",
+    "resumen": "Cuatro amigos solteros, el comediante Jerry Seinfeld, el torpe George Constanza, la trabajadora frustrada Elaine Benes y el excéntrico vecino Cosmo Kramer, lidian con las vicisitudes diarias de la vida en la ciudad de Nueva York.",
+    "temporadas": 9,
+    "duracion": null,
+    "trailer": "https://www.youtube.com/watch?v=hQXKyIG_NS4",
+    "idCategoria": 1
+  }
+}
+```
+
+**Posibles errores**: <br>
+**Código 400**:
+
+- **Descripción**: Solicitud inválida. Puede deberse a campos obligatorios faltantes o a campos no permitidos.
+- **Ejemplo de respuesta**:
+
+```json
+{
+  "error": "Todos los campos son obligatorios 🚫!"
+}
+```
+
+**Código 404**:
+
+- **Descripción**: Categoría, género o actor no encontrado.
+- **Ejemplo de respuesta**:
+
+```json
+{
+  "error": "La categoría especificada no existe 🚫!"
+}
+```
+
+**Código 500**:
+
+- **Descripción**: Error interno del servidor al intentar agregar el contenido.
+- **Ejemplo de respuesta**:
+
+```json
+{
+  "error": "Error del servidor al crear un nuevo contenido 🚫⚙️"
+}
+```
+
+**PATCH**: **Actualizar parcialmente un contenido por su ID**.
+
+**Ejemplo de solicitud**:
+
+```json
+PATCH http://localhost:3000/contenido/23
+content-type: application/json
+
+{
+    "temporadas": 6
+}
+```
+
+**Respuesta exitosa (200):** Confirmación de que el contenido se ha actualizado.
+
+```json
+{
+  "message": "Contenido actualizado correctamente ✅: ",
+  "contenidoActualizado": {
+    "idContenido": 23,
+    "titulo": "Black Mirror",
+    "resumen": "Black Mirror es una serie de televisión británica creada por Charlie Brooker que muestra el lado oscuro de la vida y la tecnología. La serie es producida por Zeppotron para Endemol. En cuanto al contenido del programa y la estructura, Brooker ha señalado que \"cada episodio tiene un tono diferente, un entorno diferente, incluso una realidad diferente, pero todos son acerca de la forma en que vivimos ahora - y la forma en que podríamos estar viviendo en 10 minutos si somos torpes\".",
+    "temporadas": 6,
+    "duracion": null,
+    "trailer": "https://www.youtube.com/watch?v=di6emt8_ie8",
+    "idCategoria": 1
+  }
+}
+```
+
+**Posibles errores**: <br>
+**Código 400**:
+
+- **Descripción**: Solicitud inválida debido a campos no permitidos o valores incorrectos.
+- **Ejemplo de respuesta**:
+
+```json
+{
+  "error": "Uno o más géneros proporcionados no existen 🚫!"
+}
+```
+
+**Código 404**:
+
+- **Descripción**: Contenido no encontrado para actualizar.
+- **Ejemplo de respuesta**:
+
+```json
+{
+  "error": "Contenido con ID {id} no encontrado para su actualización ️🕵️❗"
+}
+```
+
+**Código 500**:
+
+- **Descripción**: Error interno del servidor al intentar actualizar el contenido.
+- **Ejemplo de respuesta**:
+
+```json
+{
+  "error": "Error del servidor al actualizar el contenido 🚫⚙️"
+}
+```
+
+**DELETE**: **Eliminar un contenido por su ID**.
+
+**Ejemplo de solicitud**:
+
+```json
+
+DELETE http://localhost:3000/contenido/113
+
+```
+
+**Respuesta exitosa (200):** Confirmación de que el contenido se ha eliminado.
+
+```json
+{
+  "message": "Contenido eliminado correctamente ✅: ",
+  "contenidoEliminado": {
+    "idContenido": 113,
+    "titulo": "Seinfeld",
+    "resumen": "Cuatro amigos solteros, el comediante Jerry Seinfeld, el torpe George Constanza, la trabajadora frustrada Elaine Benes y el excéntrico vecino Cosmo Kramer, lidian con las vicisitudes diarias de la vida en la ciudad de Nueva York.",
+    "temporadas": 9,
+    "duracion": null,
+    "trailer": "https://www.youtube.com/watch?v=hQXKyIG_NS4",
+    "idCategoria": 1
+  }
+}
+```
+**Código 404**:
+
+- **Descripción**: Contenido no encontrado.
+- **Ejemplo de respuesta**:
+
+```json
+{
+  "error": "Contenido con ID {id} no encontrado 🕵️❗"
+}
+```
+
+**Código 500**:
+
+- **Descripción**: Error interno del servidor al intentar eliminar un contenido.
+- **Ejemplo de respuesta**:
+
+```json
+{
+  "error": "Error del servidor al eliminar un contenido 🚫⚙️"
+}
+```
+
+## Recursos 🧰
+
+Aquí encontrarás enlaces útiles para aprender más sobre las tecnologías utilizadas en este proyecto:
+
+### Entorno de Desarrollo
+
+- **Visual Studio Code**: [Visual Studio Code](https://code.visualstudio.com/) - Un editor de código fuente popular que ofrece extensiones útiles para desarrollo web.
+
+### Tecnologías de Backend
+
+- **Node.js**: [Node.js](https://nodejs.org/) - Un entorno de ejecución para JavaScript en el lado del servidor.
+- **Express**: [Express](https://expressjs.com/) - Un marco de aplicación web para Node.js, diseñado para construir aplicaciones y APIs web.
+- **Morgan**: [Morgan](https://www.npmjs.com/package/morgan) - Middleware para registrar solicitudes HTTP en Node.js.
+
+### Bases de Datos
+
+- **MySQL**: [MySQL](https://www.mysql.com/) - Un sistema de gestión de bases de datos relacional de código abierto, conocido por su velocidad, confiabilidad y facilidad de uso. Es ampliamente utilizado en aplicaciones web y empresariales.
+- **MySQL Workbench**: [MySQL Workbench](https://www.mysql.com/products/workbench/) - Una herramienta visual para diseñar, desarrollar y administrar bases de datos MySQL, que ofrece funciones de modelado, consulta y administración.
+
+### Modelado de Datos
+
+- **Sequelize**: [Sequelize](https://sequelize.org/) - Biblioteca de modelado de objetos relacionales para MySQL y Node.js que facilita la interacción con bases de datos a través de un enfoque basado en objetos.
+
+### Herramientas de Prueba
+
+- **REST Client**: [REST Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) - Extensión de VS Code para probar APIs directamente desde el editor.
+- **Postman**: [Postman](https://www.postman.com/) - Herramienta para realizar pruebas y desarrollo de APIs.
+- **Swagger**: [Swagger](https://swagger.io/) - Conjunto de herramientas que permite diseñar, construir y documentar APIs. En este proyecto, utilizamos `swagger-jsdoc` para generar documentación a partir de comentarios en el código y `swagger-ui-express` para visualizar esta documentación en la aplicación.
