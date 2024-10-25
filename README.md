@@ -46,7 +46,8 @@ git clone https://github.com/tu-usuario/tu-repositorio-fork.git
 3. Ahora **abre** Visual Studio Code y la carpeta correspondiente (Proyecto_Integrador_CRUD_Node.js_MySQL).
 4. **Inicia** una nueva terminal y escribe `npm install`, este comando en un directorio que ya contiene el archivo `package.json` genera que <u>npm</u> instale las dependencias especificadas en ese `package.json` y actualice el `package-lock.json` con las versiones exactas de esas dependencias.
 
-- Si seguiste estas instrucciones de instalación mediante forkear el repositorio y clonandolo a tu máquina local, evita el apartado [Iniciando el proyecto](#iniciando-el-proyecto-), ya que esta orientado a las personas que simplemente han descargado algunos archivos individuales del proyecto.
+> [!TIP]
+> Si seguiste estas instrucciones de instalación mediante forkear el repositorio y clonandolo a tu máquina local, evita el apartado [Iniciando el proyecto](#iniciando-el-proyecto-), ya que esta orientado a las personas que simplemente han descargado algunos archivos individuales del proyecto.
 
 ## Configuración de la Base de Datos 🗄️:
 
@@ -77,7 +78,7 @@ git clone https://github.com/tu-usuario/tu-repositorio-fork.git
 4. **Verifica** la integridad de las tablas y los datos insertados:
 
    - Abre y ejecuta el último archivo SQL, llamado **ejemplo_consulta_sql.sql**, ubicado en la misma carpeta `src/sql`.
-   - Si todo se ejecuta correctamente, deberías ver varios datos de una película, como su título, categoría, resumen, temporadas/duración, géneros, actores y trailer, visualizados de manera adecuada.
+   - Si todo se ejecuta correctamente, deberías ver varios datos de una película, como su título, categoría, resumen, temporadas/duración, géneros, actores y tráiler, visualizados de manera adecuada.
 
 ## Iniciando el proyecto 🚀:
 
@@ -115,7 +116,10 @@ Este apartado esta orientado a las personas que simplemente quieran descargar lo
 
 ```
 
-Antes de comenzar, **asegúrate** de haber completado la [Configuración de la Base de Datos](#configuración-de-la-base-de-datos-️). Si ya realizaste estos pasos y tienes la estructura del proyecto como se muestra arriba, puedes continuar con lo siguiente:
+> [!IMPORTANT]
+> Antes de comenzar, **asegúrate** de haber completado la [Configuración de la Base de Datos](#configuración-de-la-base-de-datos-️). <br>
+
+Si ya realizaste estos pasos y tienes la estructura del proyecto como se muestra arriba, puedes continuar con lo siguiente:
 
 - Abre la terminal e inicializa un nuevo proyecto con `npm init -y`. Esto creará el archivo `package.json`.
 - Instala las dependencias necesarias: **Express JS** (entorno para desarrollar la API), **Sequelize** (biblioteca de modelado de objetos relacionales para MySQL y Node.js), **Morgan** (middleware de registro de solicitudes HTTP), **swagger-jsdoc** (genera documentación de API a partir de comentarios JSDoc en el código) y **Swagger UI Express** (sirve una interfaz visual para interactuar con la documentación generada) con el siguiente comando:
@@ -259,7 +263,10 @@ Asegúrate de haber configurado correctamente el archivo `.env` antes de iniciar
 
 ## Rutas de la API REST 🛤️:
 
-Para comprobar la funcionalidad de cada ruta de la API, puedes utilizar la extensión `REST Client` del marketplace de Visual Studio Code o cualquier otra herramienta que tenga como finalidad el testeo de una API, como puede ser `Postman`. Los links de descarga se encuentran en [Recursos](#recursos-).<br>
+Para comprobar la funcionalidad de cada ruta de la API, puedes utilizar la extensión `REST Client` del marketplace de Visual Studio Code o cualquier otra herramienta que tenga como finalidad el testeo de una API, como puede ser `Postman`.
+> [!TIP]
+> Los links de descarga se encuentran en [Recursos](#recursos-).
+
 Si prefieres utilizar **Postman**, en el proyecto se incluye un archivo dentro de la carpeta `/tests` llamado `Proyecto_Integrador_CRUD_Node.js_MySQL.postman_collection.json`. **Importando este archivo en Postman**, tendrás acceso a todas las rutas de la API preconfiguradas para su fácil testeo. <br>
 Además, este proyecto incluye la **documentación interactiva de la API** mediante `Swagger`, a la cual se puede acceder cuando la aplicación está corriendo, utilizando la ruta `/api-docs`. Después de ejecutar la aplicación, verás un mensaje en la terminal como este:
 
@@ -281,7 +288,8 @@ Dentro del archivo `api.http` (funcional con `REST Client`) encontrarás las sig
 
 ## Ejemplos de uso 🧪:
 
-Estas acciones se realizan en el archivo `api.http`. Cabe aclarar que el puerto puede variar según su configuración; en este caso, se está utilizando el 3000: <br>
+> [!NOTE]
+> Estas acciones se realizan en el archivo `api.http`. Cabe aclarar que el puerto puede variar según su configuración; en este caso, se está utilizando el 3000: <br>
 
 **GET**: **Entramos a la ruta principal**.
 
