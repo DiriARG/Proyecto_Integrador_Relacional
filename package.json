@@ -9,8 +9,8 @@
     "dev": "node --watch app.js"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Matías Di Risio",
+  "license": "MIT",
   "dependencies": {
     "express": "^4.21.0",
     "morgan": "^1.10.0",
