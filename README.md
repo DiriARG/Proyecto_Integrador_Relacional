@@ -241,7 +241,7 @@ Esta es la estructura del proyecto en el editor de código fuente (en este caso,
 
 - **trailerflix_1.png**: Imagen que muestra el modelo relacional de la base de datos "trailerflix", con sus tablas y relaciones.
 
-## Inicialización del Servidor 🖥️
+## Inicialización del Servidor 🖥️:
 
 El archivo `app.js` es el punto de entrada de la aplicación y se encarga de inicializar el servidor, configurando las rutas y los middlewares necesarios para que la API funcione correctamente.
 
