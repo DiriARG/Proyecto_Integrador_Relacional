@@ -122,10 +122,10 @@ Este apartado esta orientado a las personas que simplemente quieran descargar lo
 Si ya realizaste estos pasos y tienes la estructura del proyecto como se muestra arriba, puedes continuar con lo siguiente:
 
 - Abre la terminal e inicializa un nuevo proyecto con `npm init -y`. Esto creará el archivo `package.json`.
-- Instala las dependencias necesarias: **Express JS** (entorno para desarrollar la API), **Sequelize** (biblioteca de modelado de objetos relacionales para MySQL y Node.js), **Morgan** (middleware de registro de solicitudes HTTP), **swagger-jsdoc** (genera documentación de API a partir de comentarios JSDoc en el código) y **Swagger UI Express** (sirve una interfaz visual para interactuar con la documentación generada) con el siguiente comando:
+- Instala las dependencias necesarias: **Express JS** (entorno para desarrollar la API), **Sequelize** (biblioteca de modelado de objetos relacionales para MySQL y Node.js), **mysql2** (driver de Sequelize para la base de datos MySQL), **Morgan** (middleware de registro de solicitudes HTTP), **swagger-jsdoc** (genera documentación de API a partir de comentarios JSDoc en el código) y **Swagger UI Express** (sirve una interfaz visual para interactuar con la documentación generada) con el siguiente comando:
 
 ```bash
-   npm i express sequelize morgan swagger-jsdoc swagger-ui-express
+   npm i express sequelize mysql2 morgan swagger-jsdoc swagger-ui-express
 ```
 
 Al instalar estos paquetes, se creará el archivo `package-lock.json` y la carpeta `node_modules`.
