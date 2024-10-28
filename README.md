@@ -259,11 +259,13 @@ Para iniciar el servidor, puedes usar uno de los siguientes comandos en la termi
 
 - **`node --watch app.js`**: Similar a `npm run dev`, este comando inicia el servidor en modo de desarrollo y se reiniciará automáticamente al detectar cambios en el código.
 
-Asegúrate de haber configurado correctamente el archivo `.env` antes de iniciar el servidor, ya que contiene las variables de entorno necesarias para la conexión a la base de datos y otras configuraciones importantes.
+> [!IMPORTANT]
+> Asegúrate de haber configurado correctamente el archivo `.env` antes de iniciar el servidor, ya que contiene las variables de entorno necesarias para la conexión a la base de datos y otras configuraciones importantes.
 
 ## Rutas de la API REST 🛤️:
 
 Para comprobar la funcionalidad de cada ruta de la API, puedes utilizar la extensión `REST Client` del marketplace de Visual Studio Code o cualquier otra herramienta que tenga como finalidad el testeo de una API, como puede ser `Postman`.
+
 > [!TIP]
 > Los links de descarga se encuentran en [Recursos](#recursos-).
 
