@@ -33,6 +33,7 @@ En este proyecto se desarrolla una aplicación utilizando Node.js (Express JS) y
 - **Descarga e instala** Visual Studio Code, el editor de código recomendado para abordar este proyecto.
 - **Descarga e instala** Node.js, un entorno de ejecución de JavaScript de código abierto y multiplataforma que permite crear servidores, aplicaciones web, APIs, herramientas de línea de comandos y scripts. Asegúrate de seleccionar la versión LTS (Long Term Support) para garantizar la estabilidad.
 - **Descarga e instala** MySQL, un sistema de gestión de bases de datos relacional, junto con MySQL Workbench. Esta herramienta visual integra desarrollo de software, administración de bases de datos, diseño de bases de datos, y gestión y mantenimiento del sistema de bases de datos MySQL.
+- **Git Bash**: Si decides clonar el repositorio en lugar de descargar los archivos individualmente, asegúrate de tener instalado Git Bash en tu computadora. 
 
 ## Instalación 📥:
 
@@ -770,6 +771,10 @@ Aquí encontrarás enlaces útiles para aprender más sobre las tecnologías uti
 ### Entorno de Desarrollo
 
 - **Visual Studio Code**: [Visual Studio Code](https://code.visualstudio.com/) - Un editor de código fuente popular que ofrece extensiones útiles para desarrollo web.
+
+### Control de Versiones
+
+- **Git**: [Git](https://git-scm.com/) - Sistema de control de versiones distribuido utilizado para rastrear cambios en el código, colaboraciones y gestión de repositorios.
 
 ### Tecnologías de Backend
 
