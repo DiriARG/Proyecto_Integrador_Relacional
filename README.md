@@ -36,8 +36,14 @@ En este proyecto se desarrolla una aplicación utilizando Node.js (Express JS) y
 
 ## Instalación 📥:
 
-1. **Fork** el repositorio desde [aquí](https://github.com/DiriARG/Proyecto_Integrador_CRUD_Node.js_MySQL/fork).
+1. **Fork** del repositorio: Haz un _fork_ del repositorio desde [este enlace](https://github.com/DiriARG/Proyecto_Integrador_CRUD_Node.js_MySQL/fork).
 2. **Clona** tu fork en tu máquina local:
+   > [!NOTE]
+   > No es necesario crear una carpeta manualmente para clonar el proyecto. Al ejecutar el siguiente comando, Git creará automáticamente una carpeta con el nombre del repositorio y descargará ahí todos los archivos.
+
+- Navega hasta la ubicación donde deseas clonar el proyecto.
+- Haz clic derecho en la carpeta y selecciona **"Open Git Bash here"** para abrir Git Bash en esa ubicación.
+- Luego, ejecuta:
 
 ```bash
 git clone https://github.com/tu-usuario/tu-repositorio-fork.git
@@ -48,6 +54,7 @@ git clone https://github.com/tu-usuario/tu-repositorio-fork.git
 
 > [!TIP]
 > Si seguiste estas instrucciones de instalación mediante forkear el repositorio y clonandolo a tu máquina local, evita el apartado [Iniciando el proyecto](#iniciando-el-proyecto-), ya que esta orientado a las personas que simplemente han descargado algunos archivos individuales del proyecto.
+
 
 ## Configuración de la Base de Datos 🗄️:
 
