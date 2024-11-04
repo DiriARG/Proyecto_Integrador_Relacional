@@ -25,6 +25,10 @@ const swaggerOptions = {
         url: "http://localhost:3000",
         description: "Servidor de desarrollo",
       },
+      {
+        url: "https://proyectointegradorrelacional-production.up.railway.app",
+        description: "Servidor de producción",
+      },
     ],
   },
   apis: ["./src/routes/*.js"], // Archivos donde están documentados los endpoints.
