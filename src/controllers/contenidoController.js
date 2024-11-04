@@ -74,6 +74,7 @@ const obtenerTodosLosContenidos = async (req, res) => {
     // Respondemos con un mensaje al cliente.
     res.status(500).json({
       error: "Error del servidor al devolver todos los contenidos 🚫⚙️",
+      mensaje: error,
     });
   }
 };
