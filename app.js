@@ -8,7 +8,7 @@ const rutaBienvenida = require("./src/routes/ruta_principal"); // Ruta de bienve
 const contenidoRoutes = require("./src/routes/contenidoRoutes"); // Rutas relacionadas con el contenido de "trailerflix".
 
 // Definimos el puerto.
-const PORT = process.env.PORT ?? 3008;
+const PORT = 3000;
 
 // Creamos una instancia de la aplicación Express.
 const app = express();

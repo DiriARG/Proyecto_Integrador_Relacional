@@ -1,4 +1,7 @@
-# Ignora archivo .env 
-.env
+# Ignora los archivos .env 
+.env.local
+.env.local_railway
+.env.production
+
 # Ignora carpeta "node_modules".
 node_modules/
