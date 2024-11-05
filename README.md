@@ -21,6 +21,7 @@ En este proyecto se desarrolla una aplicación utilizando Node.js (Express JS) y
 - [Configuración de la Base de Datos](#configuración-de-la-base-de-datos-️)
 - [Iniciando el proyecto](#iniciando-el-proyecto-)
 - [Configuración del archivo .env (Environment Variables)](#configuración-del-archivo-env-environment-variables-%EF%B8%8F)
+- [Conectarse con Railway](#conectarse-con-railway-)
 - [Estructura del proyecto](#estructura-del-proyecto-)
 - [Descripción de archivos](#descripción-de-archivos-)
 - [Inicialización del servidor](#inicialización-del-servidor-️)
@@ -39,8 +40,8 @@ En este proyecto se desarrolla una aplicación utilizando Node.js (Express JS) y
 
 1. **Fork** del repositorio: Haz un _fork_ del repositorio desde [este enlace](https://github.com/DiriARG/Proyecto_Integrador_CRUD_Node.js_MySQL/fork).
 2. **Clona** tu fork en tu máquina local:
-   > [!NOTE]
-   > No es necesario crear una carpeta manualmente para clonar el proyecto. Al ejecutar el siguiente comando, Git creará automáticamente una carpeta con el nombre del repositorio y descargará ahí todos los archivos.
+> [!NOTE]
+> No es necesario crear una carpeta manualmente para clonar el proyecto. Al ejecutar el siguiente comando, Git creará automáticamente una carpeta con el nombre del repositorio y descargará ahí todos los archivos.
 
 - Navega hasta la ubicación donde deseas clonar el proyecto.
 - Haz clic derecho en la carpeta y selecciona **"Open Git Bash here"** para abrir Git Bash en esa ubicación.
@@ -370,7 +371,9 @@ Dentro del archivo `api.http` (funcional con `REST Client`) encontrarás las sig
 ## Ejemplos de uso 🧪:
 
 > [!NOTE]
-> Estas acciones se realizan en el archivo `api.http`. Cabe aclarar que el puerto puede variar según su configuración; en este caso, se está utilizando el 3000: <br>
+> Estas acciones se realizan en el archivo `api.http`. Cabe aclarar que el puerto puede variar según su configuración; en este caso, se está utilizando el `3000`: <br>
+> Si ejecutas la aplicación en modo desarrollo utilizando `npm run start:local` o `npm run start:local_railway`, puedes hacer pruebas directamente en `http://localhost:3000`. <br>
+> Sin embargo, si ejecutas la aplicación en modo producción con `npm run start`, la aplicación ya no estará disponible en localhost. En su lugar, deberás utilizar el enlace proporcionado por Railway, como por ejemplo `https://proyectointegradorrelacional-production.up.railway.app/`. Asegúrate de actualizar la URL en tus solicitudes del archivo `api.http` para reflejar esta dirección. <br>
 
 **GET**: **Entramos a la ruta principal**.
 
@@ -692,7 +695,18 @@ content-type: application/json
 **Posibles errores**: <br>
 **Código 400**:
 
-- **Descripción**: Solicitud inválida. Puede deberse a campos obligatorios faltantes o a campos no permitidos.
+- **Descripción**: Solicitud inválida debido a campos inválidos.
+- **Ejemplo de respuesta**:
+
+```json
+{
+  "error": "Los siguientes campos no son válidos: {camposInvalidos}"
+}
+```
+
+**Código 400**:
+
+- **Descripción**: Solicitud inválida debido a campos obligatorios faltantes.
 - **Ejemplo de respuesta**:
 
 ```json
@@ -703,12 +717,34 @@ content-type: application/json
 
 **Código 404**:
 
-- **Descripción**: Categoría, género o actor no encontrado.
+- **Descripción**: Categoría no encontrada en la base de datos.
 - **Ejemplo de respuesta**:
 
 ```json
 {
   "error": "La categoría especificada no existe 🚫!"
+}
+```
+
+**Código 404**:
+
+- **Descripción**: El número de géneros encontrados no coincide con los proporcionados.
+- **Ejemplo de respuesta**:
+
+```json
+{
+  "error": "Uno o más géneros proporcionados no existen 🚫!"
+}
+```
+
+**Código 404**:
+
+- **Descripción**: El número de actores encontrados no coincide con los proporcionados.
+- **Ejemplo de respuesta**:
+
+```json
+{
+  "error": "Uno o más actores proporcionados no existen 🚫!"
 }
 ```
 
@@ -756,12 +792,12 @@ content-type: application/json
 **Posibles errores**: <br>
 **Código 400**:
 
-- **Descripción**: Solicitud inválida debido a campos no permitidos o valores incorrectos.
+- **Descripción**: Solicitud inválida debido a campos inválidos.
 - **Ejemplo de respuesta**:
 
 ```json
 {
-  "error": "Uno o más géneros proporcionados no existen 🚫!"
+  "error": "Los siguientes campos no son válidos: {camposInvalidos}"
 }
 ```
 
@@ -773,6 +809,28 @@ content-type: application/json
 ```json
 {
   "error": "Contenido con ID {id} no encontrado para su actualización ️🕵️❗"
+}
+```
+
+**Código 404**:
+
+- **Descripción**: El número de géneros encontrados no coincide con los proporcionados.
+- **Ejemplo de respuesta**:
+
+```json
+{
+  "error": "Uno o más géneros proporcionados no existen 🚫!"
+}
+```
+
+**Código 404**:
+
+- **Descripción**: El número de actores encontrados no coincide con los proporcionados.
+- **Ejemplo de respuesta**:
+
+```json
+{
+  "error": "Uno o más actores proporcionados no existen 🚫!"
 }
 ```
 
@@ -814,6 +872,7 @@ DELETE http://localhost:3000/contenido/113
 }
 ```
 
+**Posibles errores**: <br>
 **Código 404**:
 
 - **Descripción**: Contenido no encontrado.
