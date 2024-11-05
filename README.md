@@ -20,7 +20,7 @@ En este proyecto se desarrolla una aplicación utilizando Node.js (Express JS) y
 - [Instalación](#instalación-)
 - [Configuración de la Base de Datos](#configuración-de-la-base-de-datos-️)
 - [Iniciando el proyecto](#iniciando-el-proyecto-)
-- [Configuración del archivo .env (Environment Variables)](#configuración-del-archivo-env-environment-variables-%EF%B8%8F)
+- [Configuración del archivo .env.local (Environment Variables)](#configuración-del-archivo-envlocal-environment-variables-️%EF%B8%8F)
 - [Conectarse con Railway](#conectarse-con-railway-)
 - [Estructura del proyecto](#estructura-del-proyecto-)
 - [Descripción de archivos](#descripción-de-archivos-)
@@ -140,7 +140,7 @@ Si ya realizaste estos pasos y tienes la estructura del proyecto como se muestra
 
 Al instalar estos paquetes, se creará el archivo `package-lock.json` y la carpeta `node_modules`.
 
-## Configuración del archivo .env (Environment Variables) ⚙️:
+## Configuración del archivo .env.local (Environment Variables) ⚙️:
 
 1. **Renombra** el archivo llamado `.env.local_copy` a `.env.local`.
 2. **Modifica** su contenido de acuerdo con tu entorno local de desarrollo:
