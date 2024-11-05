@@ -1,6 +1,6 @@
 # Proyecto Integrador: CRUD con Node.js y MySQL 🧐
 
-En este proyecto se desarrolla una aplicación utilizando Node.js (Express JS) y MySQL (Sequelize) para gestionar el contenido disponible en la plataforma Trailerflix, que incluye películas y series. La API permite realizar operaciones CRUD (Crear, Leer, Actualizar y Borrar) sobre el contenido. Además, se ofrece la opción de filtrar el contenido por diferentes criterios, como género, título o categoría, mejorando así la experiencia de búsqueda y navegación.
+En este proyecto se desarrolla una aplicación utilizando Node.js (Express JS) y MySQL (Sequelize) para gestionar el contenido disponible en la plataforma Trailerflix, que incluye películas y series. La API permite realizar operaciones CRUD (Crear, Leer, Actualizar y Borrar) sobre el contenido. Además, se ofrece la opción de filtrar el contenido por diferentes criterios, como género, título o categoría, mejorando así la experiencia de búsqueda y navegación. Este proyecto está desplegado en Railway, una plataforma que facilita el despliegue y la gestión de aplicaciones.
 
 ## Desarrollador 👨‍💻:
 
@@ -33,14 +33,14 @@ En este proyecto se desarrolla una aplicación utilizando Node.js (Express JS) y
 - **Descarga e instala** Visual Studio Code, el editor de código recomendado para abordar este proyecto.
 - **Descarga e instala** Node.js, un entorno de ejecución de JavaScript de código abierto y multiplataforma que permite crear servidores, aplicaciones web, APIs, herramientas de línea de comandos y scripts. Asegúrate de seleccionar la versión LTS (Long Term Support) para garantizar la estabilidad.
 - **Descarga e instala** MySQL, un sistema de gestión de bases de datos relacional, junto con MySQL Workbench. Esta herramienta visual integra desarrollo de software, administración de bases de datos, diseño de bases de datos, y gestión y mantenimiento del sistema de bases de datos MySQL.
-- **Git Bash**: Si decides clonar el repositorio en lugar de descargar los archivos individualmente, asegúrate de tener instalado Git Bash en tu computadora. 
+- **Git Bash**: Si decides clonar el repositorio en lugar de descargar los archivos individualmente, asegúrate de tener instalado Git Bash en tu computadora.
 
 ## Instalación 📥:
 
 1. **Fork** del repositorio: Haz un _fork_ del repositorio desde [este enlace](https://github.com/DiriARG/Proyecto_Integrador_CRUD_Node.js_MySQL/fork).
 2. **Clona** tu fork en tu máquina local:
-> [!NOTE]
-> No es necesario crear una carpeta manualmente para clonar el proyecto. Al ejecutar el siguiente comando, Git creará automáticamente una carpeta con el nombre del repositorio y descargará ahí todos los archivos.
+   > [!NOTE]
+   > No es necesario crear una carpeta manualmente para clonar el proyecto. Al ejecutar el siguiente comando, Git creará automáticamente una carpeta con el nombre del repositorio y descargará ahí todos los archivos.
 
 - Navega hasta la ubicación donde deseas clonar el proyecto.
 - Haz clic derecho en la carpeta y selecciona **"Open Git Bash here"** para abrir Git Bash en esa ubicación.
@@ -118,7 +118,9 @@ Este apartado esta orientado a las personas que simplemente quieran descargar lo
     - Proyecto_Integrador_CRUD_Node.js_MySQL.postman_collection.json
   /utils
     - swaggerConfig.js
-/.env-copy
+/.env.local_copy
+/.env.local_railway_copy
+/.env.production_copy
 /app.js
 
 ```
@@ -129,24 +131,90 @@ Este apartado esta orientado a las personas que simplemente quieran descargar lo
 Si ya realizaste estos pasos y tienes la estructura del proyecto como se muestra arriba, puedes continuar con lo siguiente:
 
 - Abre la terminal e inicializa un nuevo proyecto con `npm init -y`. Esto creará el archivo `package.json`.
-- Instala las dependencias necesarias: **Express JS** (entorno para desarrollar la API), **Sequelize** (biblioteca de modelado de objetos relacionales para MySQL y Node.js), **mysql2** (driver de Sequelize para la base de datos MySQL), **Morgan** (middleware de registro de solicitudes HTTP), **swagger-jsdoc** (genera documentación de API a partir de comentarios JSDoc en el código) y **Swagger UI Express** (sirve una interfaz visual para interactuar con la documentación generada) con el siguiente comando:
+- Instala las dependencias necesarias: **Express JS** (entorno para desarrollar la API), **Sequelize** (biblioteca de modelado de objetos relacionales para MySQL y Node.js), **mysql2** (driver de Sequelize para la base de datos MySQL), **Morgan** (middleware de registro de solicitudes HTTP), **swagger-jsdoc** (genera documentación de API a partir de comentarios JSDoc en el código), **Swagger UI Express** (sirve una interfaz visual para interactuar con la documentación generada), **dotenv** (permite cargar variables de entorno desde archivos `.env`) y **cross-env** (asegura la compatibilidad de variables de entorno, como `NODE_ENV`, en diferentes sistemas operativos como Windows, macOS y Linux, facilitando la ejecución de scripts de forma uniforme) con el siguiente comando:
 
 ```bash
-   npm i express sequelize mysql2 morgan swagger-jsdoc swagger-ui-express
+   npm i express sequelize mysql2 morgan swagger-jsdoc swagger-ui-express dotenv cross-env
 ```
 
 Al instalar estos paquetes, se creará el archivo `package-lock.json` y la carpeta `node_modules`.
 
 ## Configuración del archivo .env (Environment Variables) ⚙️:
 
-1. **Renombra** el archivo llamado `.env_copia` a `.env`.
+1. **Renombra** el archivo llamado `.env.local_copy` a `.env.local`.
 2. **Modifica** su contenido de acuerdo con tu entorno local de desarrollo:
 
 - DATABASE: Nombre de la base de datos a la que te vas a conectar.
 - DBUSER: Nombre de usuario de tu base de datos.
 - PASSWORD: Contraseña para el usuario de la base de datos.
-- HOST: Dirección del host de la base de datos (por ejemplo, localhost si trabajas localmente).
-- PORT: Ingresa el puerto al cual se va a usar para conectar a la API.
+- HOST: Dirección del host de la base de datos (por ejemplo, localhost).
+
+## Conectarse con Railway 🚂:
+
+### Paso 1: Configuración en Railway
+
+1. En la página principal de Railway, selecciona **Start a new project** y elige **Deploy MySQL**.
+
+### Paso 2: Configuración de MySQL en MySQL Workbench
+
+1. Crea una nueva conexión en MySQL Workbench:
+
+   - **Connection Name**: Usa un nombre descriptivo, como `Railway Deploy`.
+   - **Hostname**: Encuéntralo en la sección **Settings > Networking > Public Networking** en Railway, por ejemplo, `junction.proxy.rlwy.net`.
+   - **Port**: Cambia el puerto al indicado en **Settings > Networking > Public Networking**, por ejemplo, `22298`.
+   - **Username**: Lo obtienes en la sección **Variables** bajo el nombre `MYSQLUSER` (por ejemplo, `root`).
+   - **Password**: Haz clic en **Store in Vault...** e ingresa la contraseña de `MYSQLPASSWORD`, encontrada en la sección **Variables** de Railway.
+
+2. Después de crear la conexión, accede a ella en MySQL Workbench.
+   - Importa y ejecuta el archivo `trailerflix_creación_bd_y_tablas.sql` para crear la base de datos y las tablas.
+   - Luego, importa y ejecuta el archivo `trailerflix_inserts.sql` para insertar los datos en las tablas.
+
+### Paso 3: Configuración de Variables de Entorno
+
+#### Archivo `.env.local_railway_copy` cambia su nombre a `.env.local_railway`
+
+Actualiza el archivo `.env.local_railway` con los datos de conexión de Railway:
+
+- **DBUSER**: Cambia por el valor de `MYSQLUSER`, por ejemplo, `root`.
+- **HOST**: Cambia al valor de `RAILWAY_TCP_PROXY_DOMAIN`.
+- **DBPORT**: Cambia al valor de `RAILWAY_TCP_PROXY_PORT`.
+- **PASSWORD**: Usa el valor de `MYSQL_ROOT_PASSWORD`.
+- **DATABASE**: Especifica el nombre de la base de datos, en este caso, `trailerflix`.
+
+#### Archivo `.env.production_copy` cambia su nombre a `.env.production`
+
+Configura el archivo `.env.production` con las siguientes variables:
+
+- **HOST**: Cambia al valor de `RAILWAY_PRIVATE_DOMAIN`.
+- **DBPORT**: Cambia al valor de `RAILWAY_TCP_APPLICATION_PORT`.
+- Los demás campos deben coincidir con los valores de `.env.local_railway`.
+
+### Paso 4: Configurar el Repositorio de GitHub en Railway
+
+1. Haz clic en **Create** a la derecha de la pantalla en Railway, selecciona **GitHub Repo** y, si no lo has hecho ya, inicia sesión en GitHub.
+2. Pega el enlace de tu repositorio de GitHub para que Railway pueda acceder y desplegar el proyecto.
+
+### Paso 5: Generar el Dominio de la API
+
+1. Una vez que el proyecto esté desplegado, ve a **Settings > Networking** y en **Public Networking** haz clic en **Generate Domain** para crear un dominio público.
+
+### Paso 6: Importar Variables de Entorno en Railway
+
+1. En el despliegue del proyecto en Railway, ve a la sección de **Variables**. Haz clic en **Import all your variables using the Raw Editor**.
+2. En el **Raw Editor**, selecciona el formato **ENV** y pega todas las variables del archivo `.env.production`.
+
+### Paso 7: Agregar Scripts al `package.json`
+
+Para ejecutar el proyecto en diferentes entornos, agrega los siguientes scripts en el archivo `package.json` dentro del apartado llamado **scripts**:
+
+```json
+"scripts": {
+  "test": "echo \"Error: no test specified\" && exit 1",
+  "start:local": "cross-env NODE_ENV=local node app.js",
+  "start:local_railway": "cross-env NODE_ENV=local_railway node app.js",
+  "start": "cross-env NODE_ENV=production node app.js"
+}
+```
 
 ## Estructura del proyecto 📂:
 
@@ -181,7 +249,9 @@ Esta es la estructura del proyecto en el editor de código fuente (en este caso,
     - Proyecto_Integrador_CRUD_Node.js_MySQL.postman_collection.json
   /utils
     - swaggerConfig.js
-/.env
+/.env.local
+/.env.local_railway
+/.env.production
 /.gitignore
 /app.js
 /enunciado.md
@@ -234,7 +304,11 @@ Esta es la estructura del proyecto en el editor de código fuente (en este caso,
   - **/utils**: Carpeta que contiene archivos que se utilizan en distintas partes del proyecto.
     - **swaggerConfig**: Archivo que configura Swagger para documentar la API.
 
-- **.env**: Archivo que almacena las variables de entorno utilizadas en la configuración del proyecto.
+- **.env.local**: Archivo que almacena las variables de entorno para conexiones de desarrollo local en una base de datos MySQL en localhost.
+
+- **.env.local_railway**: Archivo que almacena las variables de entorno para conexiones de desarrollo en Railway, utilizado para pruebas en un entorno lo más cercano posible al de producción.
+
+- **.env.production**: Archivo que almacena las variables de entorno para la conexión de base de datos en Railway en el entorno de producción, usado exclusivamente en el despliegue final de la API.
 
 - **.gitignore**: Archivo que le indica a Git qué archivos o carpetas deben ser ignorados por el sistema de control de versiones.
 
@@ -258,16 +332,14 @@ El archivo `app.js` es el punto de entrada de la aplicación y se encarga de ini
 
 Para iniciar el servidor, puedes usar uno de los siguientes comandos en la terminal:
 
-- **`npm run dev`**: Este comando inicia la aplicación en modo de desarrollo. Utiliza la opción `--watch`, lo que significa que el servidor se reiniciará automáticamente cada vez que realices cambios en el código. Esto es útil para el desarrollo, ya que no tendrás que reiniciar manualmente el servidor cada vez.
+- **`npm run start:local`**: Este comando inicia la aplicación en modo de desarrollo local, utilizando las variables de entorno definidas en `.env.local`. Es útil para realizar pruebas en tu entorno local con tu base de datos en localhost.
 
-- **`npm start`**: Este comando inicia la aplicación en modo producción. Ejecuta `node app.js`, lo que inicia el servidor sin las características de reinicio automático. Es ideal para entornos en los que deseas que el servidor se ejecute de manera estable sin interrupciones.
+- **`npm run start:local_railway`**: Este comando inicia la aplicación en modo de desarrollo conectado a Railway, utilizando las variables de entorno definidas en `.env.local_railway`. Ideal para probar la conexión con la base de datos en Railway antes de subir cambios a producción.
 
-- **`node app.js`**: Este comando también puede utilizarse para iniciar la aplicación directamente, funcionando igual que `npm start`, pero sin los scripts de npm.
-
-- **`node --watch app.js`**: Similar a `npm run dev`, este comando inicia el servidor en modo de desarrollo y se reiniciará automáticamente al detectar cambios en el código.
+- **`npm start`**: Este comando inicia la aplicación en modo producción, utilizando las variables de entorno de `.env.production`. Es adecuado para entornos de despliegue final, donde deseas estabilidad sin reinicios automáticos.
 
 > [!IMPORTANT]
-> Asegúrate de haber configurado correctamente el archivo `.env` antes de iniciar el servidor, ya que contiene las variables de entorno necesarias para la conexión a la base de datos y otras configuraciones importantes.
+> Asegúrate de haber configurado correctamente los archivos `.env.local`, `.env.local_railway`, y `.env.production` antes de iniciar el servidor, ya que contiene las variables de entorno necesarias para la conexión a la base de datos y otras configuraciones importantes.
 
 ## Rutas de la API REST 🛤️:
 
@@ -790,6 +862,12 @@ Aquí encontrarás enlaces útiles para aprender más sobre las tecnologías uti
 ### Modelado de Datos
 
 - **Sequelize**: [Sequelize](https://sequelize.org/) - Biblioteca de modelado de objetos relacionales para MySQL y Node.js que facilita la interacción con bases de datos a través de un enfoque basado en objetos.
+
+### Despliegue y Gestión de Entorno
+
+- **Railway**: [Railway](https://railway.app/) - Plataforma de despliegue que permite alojar y gestionar aplicaciones y bases de datos de manera sencilla y escalable.
+- **dotenv**: [dotenv](https://www.npmjs.com/package/dotenv) - Módulo para cargar variables de entorno desde archivos `.env`, simplificando la gestión de configuraciones sensibles y específicas de cada entorno.
+- **cross-env**: [cross-env](https://www.npmjs.com/package/cross-env) - Permite definir variables de entorno de forma compatible entre sistemas operativos, como `NODE_ENV`, facilitando la ejecución uniforme de scripts en diferentes entornos.
 
 ### Herramientas de Prueba
 
