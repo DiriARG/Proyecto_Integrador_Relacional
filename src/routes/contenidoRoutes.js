@@ -53,6 +53,29 @@ const contenidoController = require("../controllers/contenidoController");
  *                     type: string
  *                     description: URL del tráiler del contenido.
  *                     example: "https://www.youtube.com/watch?v=xyz123"
+ *             example: [
+ *               {
+ *                 ID: 1,
+ *                 Título: "The Mandalorian",
+ *                 Categoría: "Serie",
+ *                 Resumen: "Un cazarrecompensas mandaloriano navega por los confines de la galaxia.",
+ *                 Temporadas/Duración: "8 temporadas",
+ *                 Géneros: "Sci-Fi, Acción",
+ *                 Actores: "Pedro Pascal, Carl Weathers",
+ *                 Tráiler: "https://www.youtube.com/watch?v=xyz123"
+ *               },
+ *               {
+ *                 ID: 2,
+ *                 Título: "The Umbrella Academy",
+ *                 Categoría: "Serie",
+ *                 Resumen: "La muerte de su padre reúne a unos hermanos distanciados y con extraordinarios poderes que descubren impactantes secretos y una amenaza que se cierne sobre la humanidad.",
+ *                 Temporadas/Duración: "1",
+ *                 Géneros: "Sci-Fi, Fantasía, Drama",
+ *                 Actores: "Tom Hopper, David Castañeda, Emmy Raver-Lampman, Robert Sheehan, Aidan Gallagher, Elliot Page",
+ *                 Tráiler: "https://www.youtube.com/embed/KHucKOK-Vik"
+ *               },
+ *               ...
+ *             ]
  *       404:
  *         description: No se encontraron contenidos en la base de datos.
  *         content:
@@ -344,7 +367,7 @@ router.get("/:id", contenidoController.obtenerContenidoPorID);
  *                       description: ID de la categoría asociada.
  *                       example: 1
  *       400:
- *         description: Solicitud inválida. Puede deberse a campos obligatorios faltantes o a campos no permitidos.
+ *         description: Solicitud inválida debido a campos inválidos o campos obligatorios faltantes.
  *         content:
  *           application/json:
  *             schema:
@@ -352,9 +375,11 @@ router.get("/:id", contenidoController.obtenerContenidoPorID);
  *               properties:
  *                 error:
  *                   type: string
- *                   example: "Todos los campos son obligatorios 🚫!"
+ *                   example: 
+ *                     camposInvalidos: "Los siguientes campos no son válidos: {camposInvalidos}"
+ *                     camposFaltantes: "Todos los campos son obligatorios 🚫!"
  *       404:
- *         description: Categoría, género o actor no encontrado.
+ *         description: Recurso no encontrado.
  *         content:
  *           application/json:
  *             schema:
@@ -362,7 +387,10 @@ router.get("/:id", contenidoController.obtenerContenidoPorID);
  *               properties:
  *                 error:
  *                   type: string
- *                   example: "La categoría especificada no existe 🚫!"
+ *                   example: 
+ *                     categoriaNoEncontrada: "La categoría especificada no existe 🚫!"
+ *                     generoNoEncontrado: "Uno o más géneros proporcionados no existen 🚫!"
+ *                     actorNoEncontrado: "Uno o más actores proporcionados no existen 🚫!"
  *       500:
  *         description: Error interno del servidor al intentar agregar el contenido.
  *         content:
@@ -475,7 +503,7 @@ router.post("/", contenidoController.agregarContenido);
  *                       description: ID de la categoría asociada.
  *                       example: 1
  *       400:
- *         description: Solicitud inválida debido a campos no permitidos o valores incorrectos.
+ *         description: Solicitud inválida debido a campos inválidos.
  *         content:
  *           application/json:
  *             schema:
@@ -483,9 +511,9 @@ router.post("/", contenidoController.agregarContenido);
  *               properties:
  *                 error:
  *                   type: string
- *                   example: "Uno o más géneros proporcionados no existen 🚫!"
+ *                   example: "Los siguientes campos no son válidos: {camposInvalidos}"
  *       404:
- *         description: Contenido no encontrado para actualizar.
+ *         description: Recurso no encontrado.
  *         content:
  *           application/json:
  *             schema:
@@ -493,7 +521,10 @@ router.post("/", contenidoController.agregarContenido);
  *               properties:
  *                 error:
  *                   type: string
- *                   example: "Contenido con ID {id} no encontrado para su actualización ️🕵️❗"
+ *                   example: 
+ *                     contenidoNoEncontrado: "Contenido con ID {id} no encontrado para su actualización ️🕵️❗"
+ *                     generoNoEncontrado: "Uno o más géneros proporcionados no existen 🚫!"
+ *                     actorNoEncontrado: "Uno o más actores proporcionados no existen 🚫!"
  *       500:
  *         description: Error del servidor.
  *         content:
