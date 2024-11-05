@@ -382,7 +382,7 @@ const actualizarContenido = async (req, res) => {
 
       if (generosDB.length !== generos.length) {
         return res
-          .status(400)
+          .status(404)
           .json({ error: "Uno o más géneros proporcionados no existen 🚫!" });
       }
     }
@@ -396,7 +396,7 @@ const actualizarContenido = async (req, res) => {
 
       if (actoresDB.length !== actores.length) {
         return res
-          .status(400)
+          .status(404)
           .json({ error: "Uno o más actores proporcionados no existen 🚫!" });
       }
     }
