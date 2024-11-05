@@ -20,7 +20,7 @@ En este proyecto se desarrolla una aplicación utilizando Node.js (Express JS) y
 - [Instalación](#instalación-)
 - [Configuración de la Base de Datos](#configuración-de-la-base-de-datos-️)
 - [Iniciando el proyecto](#iniciando-el-proyecto-)
-- [Configuración del archivo .env.local (Environment Variables)](#configuración-del-archivo-envlocal-environment-variables-️%EF%B8%8F)
+- [Configuración del archivo .env.local (Environment Variables)](#configuración-del-archivo-envlocal-environment-variables-️)
 - [Conectarse con Railway](#conectarse-con-railway-)
 - [Estructura del proyecto](#estructura-del-proyecto-)
 - [Descripción de archivos](#descripción-de-archivos-)
@@ -368,6 +368,8 @@ Dentro del archivo `api.http` (funcional con `REST Client`) encontrarás las sig
 | PATCH | `/contenido/:id` | Actualizar parcialmente un contenido por su ID. |
 | DELETE | `/contenido/:id` | Eliminar un contenido por su ID.|
 
+> [!NOTE]
+> Para acceder a la documentación de Swagger en producción, utiliza la siguiente URL: https://proyectointegradorrelacional-production.up.railway.app/api-docs/.
 ## Ejemplos de uso 🧪:
 
 > [!NOTE]
