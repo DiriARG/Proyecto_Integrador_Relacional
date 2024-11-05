@@ -51,7 +51,7 @@ En este proyecto se desarrolla una aplicación utilizando Node.js (Express JS) y
 git clone https://github.com/tu-usuario/tu-repositorio-fork.git
 ```
 
-3. Ahora **abre** Visual Studio Code y la carpeta correspondiente (Proyecto_Integrador_CRUD_Node.js_MySQL).
+3. Ahora **abre** Visual Studio Code y la carpeta correspondiente (Proyecto_Integrador_Relacional).
 4. **Inicia** una nueva terminal y escribe `npm install`, este comando en un directorio que ya contiene el archivo `package.json` genera que <u>npm</u> instale las dependencias especificadas en ese `package.json` y actualice el `package-lock.json` con las versiones exactas de esas dependencias.
 
 > [!TIP]
@@ -75,7 +75,7 @@ git clone https://github.com/tu-usuario/tu-repositorio-fork.git
 2. **Crea** una nueva base de datos en MySQL Workbench:
 
    - En el menú superior, selecciona **File > Open SQL Script...** o presiona `Ctrl + Mayús + O` en el teclado.
-   - Navega hasta la carpeta del proyecto `Proyecto_Integrador_CRUD_Node.js_MySQL`, ingresa en la subcarpeta `src/sql`, y selecciona el archivo **trailerflix_creación_bd_y_tablas.sql**.
+   - Navega hasta la carpeta del proyecto `Proyecto_Integrador_Relacional`, ingresa en la subcarpeta `src/sql`, y selecciona el archivo **trailerflix_creación_bd_y_tablas.sql**.
    - Una vez abierto el archivo, se abrirá una nueva pestaña en MySQL Workbench. Ejecuta el script para crear la base de datos y las tablas correspondientes.
 
 3. **Inserta** datos en las tablas:
