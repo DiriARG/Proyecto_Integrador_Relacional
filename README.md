@@ -337,7 +337,7 @@ Para iniciar el servidor, puedes usar uno de los siguientes comandos en la termi
 
 - **`npm run start:local_railway`**: Este comando inicia la aplicación en modo de desarrollo conectado a Railway, utilizando las variables de entorno definidas en `.env.local_railway`. Ideal para probar la conexión con la base de datos en Railway antes de subir cambios a producción.
 
-- **`npm start`**: Este comando inicia la aplicación en modo producción, utilizando las variables de entorno de `.env.production`. Es adecuado para entornos de despliegue final, donde deseas estabilidad sin reinicios automáticos.
+- **`npm start`**: Este comando inicia la aplicación en modo producción, utilizando las variables de entorno de `.env.production`. Este comando está pensado para ejecutarse en el servidor de Railway en producción y **no en local**, ya que intenta conectarse al host de la base de datos de Railway, el cual no es accesible desde tu entorno local.
 
 > [!IMPORTANT]
 > Asegúrate de haber configurado correctamente los archivos `.env.local`, `.env.local_railway`, y `.env.production` antes de iniciar el servidor, ya que contiene las variables de entorno necesarias para la conexión a la base de datos y otras configuraciones importantes.
@@ -369,13 +369,14 @@ Dentro del archivo `api.http` (funcional con `REST Client`) encontrarás las sig
 | DELETE | `/contenido/:id` | Eliminar un contenido por su ID.|
 
 > [!NOTE]
-> Para acceder a la documentación de Swagger en producción, utiliza la siguiente URL: https://proyectointegradorrelacional-production.up.railway.app/api-docs/.
+> Para acceder a la documentación de Swagger en producción, utiliza la siguiente URL: https://proyectointegradorrelacional-production.up.railway.app/api-docs/. <br>
+> No olvides cambiar el servidor en el apartado de **"Servers"** de Swagger, ya que, de forma predeterminada, estará configurado en el servidor de desarrollo (`http://localhost:3000`). Este servidor de desarrollo funciona para quienes ejecutan `npm run start:local` y `npm run start:local_railway`, pero en modo producción deberás seleccionar manualmente el servidor de producción (`https://proyectointegradorrelacional-production.up.railway.app/`) haciendo clic en él.
 ## Ejemplos de uso 🧪:
 
 > [!NOTE]
 > Estas acciones se realizan en el archivo `api.http`. Cabe aclarar que el puerto puede variar según su configuración; en este caso, se está utilizando el `3000`: <br>
 > Si ejecutas la aplicación en modo desarrollo utilizando `npm run start:local` o `npm run start:local_railway`, puedes hacer pruebas directamente en `http://localhost:3000`. <br>
-> Sin embargo, si ejecutas la aplicación en modo producción con `npm run start`, la aplicación ya no estará disponible en localhost. En su lugar, deberás utilizar el enlace proporcionado por Railway, como por ejemplo `https://proyectointegradorrelacional-production.up.railway.app/`. Asegúrate de actualizar la URL en tus solicitudes del archivo `api.http` para reflejar esta dirección. <br>
+> Sin embargo, en modo producción la aplicación ya no estará disponible en `localhost`. En su lugar, deberás utilizar el enlace proporcionado por Railway, como por ejemplo `https://proyectointegradorrelacional-production.up.railway.app/`. Asegúrate de actualizar la URL en tus solicitudes del archivo `api.http` para reflejar esta dirección. <br>
 
 **GET**: **Entramos a la ruta principal**.
 
