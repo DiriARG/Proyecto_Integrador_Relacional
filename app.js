@@ -4,8 +4,8 @@ const morgan = require("morgan");
 const { swaggerUi, swaggerDocs } = require("./src/utils/swaggerConfig");
 
 // Importamos las rutas definidas en otro archivo.
-const rutaBienvenida = require("./src/routes/ruta_principal"); // Ruta de bienvenida.
-const contenidoRoutes = require("./src/routes/contenidoRoutes"); // Rutas relacionadas con el contenido de "trailerflix".
+const rutaBienvenida = require("./src/routes/01_ruta_principal"); // Ruta de bienvenida.
+const contenidoRoutes = require("./src/routes/02_contenidoRoutes"); // Rutas relacionadas con el contenido de "trailerflix".
 
 // Definimos el puerto.
 const PORT = 3000;

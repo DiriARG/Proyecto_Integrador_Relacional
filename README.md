@@ -108,8 +108,8 @@ Este apartado esta orientado a las personas que simplemente quieran descargar lo
     - contenido.js
     - genero.js
   /routes
-    - ruta_principal.js
-    - contenidoRoutes.js
+    - 01_ruta_principal.js
+    - 02_contenidoRoutes.js
   /sql
     - ejemplo_consulta_sql.sql
     - trailerflix_creación_bd_y_tablas.sql
@@ -239,8 +239,8 @@ Esta es la estructura del proyecto en el editor de código fuente (en este caso,
     - contenido.js
     - genero.js
   /routes
-    - contenidoRoutes.js
-    - ruta_principal.js
+    - 01_ruta_principal.js
+    - 02_contenidoRoutes.js
   /sql
     - ejemplo_consulta_sql.sql
     - trailerflix_creación_bd_y_tablas.sql
@@ -290,8 +290,8 @@ Esta es la estructura del proyecto en el editor de código fuente (en este caso,
 
   - **/routes**: Carpeta que contiene los archivos relacionados con las rutas de la API.
 
-    - **contenidoRoutes.js**: Define todas las rutas relacionadas con los contenidos de "Trailerflix" (crear, leer, actualizar y eliminar).
-    - **ruta_principal.js**: Define la ruta principal de la API con un mensaje de bienvenida.
+    - **01_ruta_principal.js**: Define la ruta principal de la API con un mensaje de bienvenida.
+    - **02_contenidoRoutes.js**: Define todas las rutas relacionadas con los contenidos de "Trailerflix" (crear, leer, actualizar y eliminar).
 
   - **/sql**: Contiene los archivos SQL necesarios para la creación y llenado de la base de datos.
 
