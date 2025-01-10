@@ -255,6 +255,7 @@ Esta es la estructura del proyecto en el editor de código fuente (en este caso,
 /.env.production
 /.gitignore
 /app.js
+/correciónKappa.jpg
 /enunciado.md
 /LICENSE
 /package-lock.json
@@ -314,6 +315,8 @@ Esta es la estructura del proyecto en el editor de código fuente (en este caso,
 - **.gitignore**: Archivo que le indica a Git qué archivos o carpetas deben ser ignorados por el sistema de control de versiones.
 
 - **app.js**: Archivo principal de la aplicación donde se inicializa el servidor y se configuran las rutas y los middlewares.
+
+- **correciónKappa.jpg**: Al subir esta captura de pantalla, aún no he recibido la calificación numérica del proyecto ni la devolución detallada sobre cada endpoint. Solo he recibido la confirmación de que está aprobado y un audio con recomendaciones adicionales fuera de los requisitos del proyecto. Si llego a recibir la devolución, la subiré.
 
 - **enunciado.md**: Archivo que fue brindado por el profesor de la diplomatura. Contiene la consigna del ejercicio a realizar junto a otros detalles que se deben cumplir para la aprobación del proyecto integrador.
 
